@@ -12,5 +12,5 @@ doc/api/
 config/passwords.yaml
 
 
-lib/src/generated
-migrations
+webtoon_server/lib/src/generated/*
+migrations/*
