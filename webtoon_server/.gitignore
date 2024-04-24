@@ -10,3 +10,7 @@ doc/api/
 
 # Passwords file
 config/passwords.yaml
+
+
+lib/src/generated
+migrations
