@@ -2,24 +2,23 @@ name: webtoon_flutter
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project with Serverpod.
-environment: 
+environment:
   sdk: '>=3.0.0 <4.0.0'
   flutter: '>=3.10.0'
 
-dependencies: 
-  serverpod_flutter: 1.2.6
+dependencies:
   cupertino_icons: ^1.0.5
-  get: 4.6.6
-  flutter: 
+  flutter:
     sdk: flutter
-  webtoon_client: 
+  get: 4.6.6
+  serverpod_flutter: 1.2.6
+  webtoon_client:
     path: ../webtoon_client
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: ^3.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
   uses-material-design: true
-
