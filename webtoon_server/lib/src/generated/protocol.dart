@@ -11,13 +11,21 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
-import 'book.dart' as _i3;
-import 'espisode.dart' as _i4;
-import 'example.dart' as _i5;
-import 'protocol.dart' as _i6;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
+import 'book.dart' as _i4;
+import 'category.dart' as _i5;
+import 'comment.dart' as _i6;
+import 'espisode.dart' as _i7;
+import 'example.dart' as _i8;
+import 'library.dart' as _i9;
+import 'protocol.dart' as _i10;
+import 'package:webtoon_server/src/generated/category.dart' as _i11;
 export 'book.dart';
+export 'category.dart';
+export 'comment.dart';
 export 'espisode.dart';
 export 'example.dart';
+export 'library.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
   Protocol._();
@@ -37,7 +45,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'book_id_seq\'::regclass)',
@@ -54,8 +62,31 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'String',
         ),
+        _i2.ColumnDefinition(
+          name: 'cover',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'categoryId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
       ],
-      foreignKeys: [],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'book_fk_0',
+          columns: ['categoryId'],
+          referenceTable: 'category',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'book_pkey',
@@ -74,6 +105,144 @@ class Protocol extends _i1.SerializationManagerServer {
       managed: true,
     ),
     _i2.TableDefinition(
+      name: 'category',
+      dartName: 'Category',
+      schema: 'public',
+      module: 'webtoon',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'category_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'title',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'category_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        )
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'comment',
+      dartName: 'Comment',
+      schema: 'public',
+      module: 'webtoon',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'comment_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'comment',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'bookId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'parentId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'userInfoId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'comment_fk_0',
+          columns: ['bookId'],
+          referenceTable: 'book',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'comment_fk_1',
+          columns: ['parentId'],
+          referenceTable: 'comment',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.setNull,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'comment_fk_2',
+          columns: ['userInfoId'],
+          referenceTable: 'serverpod_user_info',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'comment_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'user_comment_idx',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'userInfoId',
+            )
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
       name: 'espisode',
       dartName: 'Espisode',
       schema: 'public',
@@ -81,7 +250,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'espisode_id_seq\'::regclass)',
@@ -93,22 +262,28 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
+          name: 'cover',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
           name: 'image',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: '_bookEspisodesBookId',
-          columnType: _i2.ColumnType.integer,
-          isNullable: true,
-          dartType: 'int?',
+          name: 'bookId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
         ),
       ],
       foreignKeys: [
         _i2.ForeignKeyDefinition(
           constraintName: 'espisode_fk_0',
-          columns: ['_bookEspisodesBookId'],
+          columns: ['bookId'],
           referenceTable: 'book',
           referenceTableSchema: 'public',
           referenceColumns: ['id'],
@@ -134,6 +309,109 @@ class Protocol extends _i1.SerializationManagerServer {
       ],
       managed: true,
     ),
+    _i2.TableDefinition(
+      name: 'library',
+      dartName: 'Library',
+      schema: 'public',
+      module: 'webtoon',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'library_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'userInfoId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'espisodeId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'bookId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'library_fk_0',
+          columns: ['userInfoId'],
+          referenceTable: 'serverpod_user_info',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'library_fk_1',
+          columns: ['espisodeId'],
+          referenceTable: 'espisode',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'library_fk_2',
+          columns: ['bookId'],
+          referenceTable: 'book',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'library_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'user_library_unique_idx',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'userInfoId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'bookId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'espisodeId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
+    ..._i3.Protocol.targetTableDefinitions,
     ..._i2.Protocol.targetTableDefinitions,
   ];
 
@@ -146,29 +424,79 @@ class Protocol extends _i1.SerializationManagerServer {
     if (customConstructors.containsKey(t)) {
       return customConstructors[t]!(data, this) as T;
     }
-    if (t == _i3.Book) {
-      return _i3.Book.fromJson(data, this) as T;
+    if (t == _i4.Book) {
+      return _i4.Book.fromJson(data, this) as T;
     }
-    if (t == _i4.Espisode) {
-      return _i4.Espisode.fromJson(data, this) as T;
+    if (t == _i5.Category) {
+      return _i5.Category.fromJson(data, this) as T;
     }
-    if (t == _i5.Example) {
-      return _i5.Example.fromJson(data, this) as T;
+    if (t == _i6.Comment) {
+      return _i6.Comment.fromJson(data, this) as T;
     }
-    if (t == _i1.getType<_i3.Book?>()) {
-      return (data != null ? _i3.Book.fromJson(data, this) : null) as T;
+    if (t == _i7.Espisode) {
+      return _i7.Espisode.fromJson(data, this) as T;
     }
-    if (t == _i1.getType<_i4.Espisode?>()) {
-      return (data != null ? _i4.Espisode.fromJson(data, this) : null) as T;
+    if (t == _i8.Example) {
+      return _i8.Example.fromJson(data, this) as T;
     }
-    if (t == _i1.getType<_i5.Example?>()) {
-      return (data != null ? _i5.Example.fromJson(data, this) : null) as T;
+    if (t == _i9.Library) {
+      return _i9.Library.fromJson(data, this) as T;
     }
-    if (t == _i1.getType<List<_i6.Espisode>?>()) {
+    if (t == _i1.getType<_i4.Book?>()) {
+      return (data != null ? _i4.Book.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i5.Category?>()) {
+      return (data != null ? _i5.Category.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i6.Comment?>()) {
+      return (data != null ? _i6.Comment.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i7.Espisode?>()) {
+      return (data != null ? _i7.Espisode.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i8.Example?>()) {
+      return (data != null ? _i8.Example.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i9.Library?>()) {
+      return (data != null ? _i9.Library.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<List<_i10.Espisode>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i6.Espisode>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i10.Espisode>(e)).toList()
           : null) as dynamic;
     }
+    if (t == _i1.getType<List<_i10.Library>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i10.Library>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i10.Comment>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i10.Comment>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i10.Book>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i10.Book>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i10.Comment>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i10.Comment>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i10.Library>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i10.Library>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i11.Category>) {
+      return (data as List).map((e) => deserialize<_i11.Category>(e)).toList()
+          as dynamic;
+    }
+    try {
+      return _i3.Protocol().deserialize<T>(data, t);
+    } catch (_) {}
     try {
       return _i2.Protocol().deserialize<T>(data, t);
     } catch (_) {}
@@ -177,28 +505,55 @@ class Protocol extends _i1.SerializationManagerServer {
 
   @override
   String? getClassNameForObject(Object data) {
-    if (data is _i3.Book) {
+    String? className;
+    className = _i3.Protocol().getClassNameForObject(data);
+    if (className != null) {
+      return 'serverpod_auth.$className';
+    }
+    if (data is _i4.Book) {
       return 'Book';
     }
-    if (data is _i4.Espisode) {
+    if (data is _i5.Category) {
+      return 'Category';
+    }
+    if (data is _i6.Comment) {
+      return 'Comment';
+    }
+    if (data is _i7.Espisode) {
       return 'Espisode';
     }
-    if (data is _i5.Example) {
+    if (data is _i8.Example) {
       return 'Example';
+    }
+    if (data is _i9.Library) {
+      return 'Library';
     }
     return super.getClassNameForObject(data);
   }
 
   @override
   dynamic deserializeByClassName(Map<String, dynamic> data) {
+    if (data['className'].startsWith('serverpod_auth.')) {
+      data['className'] = data['className'].substring(15);
+      return _i3.Protocol().deserializeByClassName(data);
+    }
     if (data['className'] == 'Book') {
-      return deserialize<_i3.Book>(data['data']);
+      return deserialize<_i4.Book>(data['data']);
+    }
+    if (data['className'] == 'Category') {
+      return deserialize<_i5.Category>(data['data']);
+    }
+    if (data['className'] == 'Comment') {
+      return deserialize<_i6.Comment>(data['data']);
     }
     if (data['className'] == 'Espisode') {
-      return deserialize<_i4.Espisode>(data['data']);
+      return deserialize<_i7.Espisode>(data['data']);
     }
     if (data['className'] == 'Example') {
-      return deserialize<_i5.Example>(data['data']);
+      return deserialize<_i8.Example>(data['data']);
+    }
+    if (data['className'] == 'Library') {
+      return deserialize<_i9.Library>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -206,16 +561,28 @@ class Protocol extends _i1.SerializationManagerServer {
   @override
   _i1.Table? getTableForType(Type t) {
     {
+      var table = _i3.Protocol().getTableForType(t);
+      if (table != null) {
+        return table;
+      }
+    }
+    {
       var table = _i2.Protocol().getTableForType(t);
       if (table != null) {
         return table;
       }
     }
     switch (t) {
-      case _i3.Book:
-        return _i3.Book.t;
-      case _i4.Espisode:
-        return _i4.Espisode.t;
+      case _i4.Book:
+        return _i4.Book.t;
+      case _i5.Category:
+        return _i5.Category.t;
+      case _i6.Comment:
+        return _i6.Comment.t;
+      case _i7.Espisode:
+        return _i7.Espisode.t;
+      case _i9.Library:
+        return _i9.Library.t;
     }
     return null;
   }

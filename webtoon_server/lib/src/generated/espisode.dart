@@ -9,18 +9,28 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'protocol.dart' as _i2;
+import 'package:serverpod_serialization/serverpod_serialization.dart';
 
 abstract class Espisode extends _i1.TableRow {
   Espisode._({
     int? id,
     required this.title,
+    required this.cover,
     required this.image,
+    required this.bookId,
+    this.book,
+    this.libraries,
   }) : super(id);
 
   factory Espisode({
     int? id,
     required String title,
+    required String cover,
     required String image,
+    required int bookId,
+    _i2.Book? book,
+    List<_i2.Library>? libraries,
   }) = _EspisodeImpl;
 
   factory Espisode.fromJson(
@@ -31,8 +41,16 @@ abstract class Espisode extends _i1.TableRow {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       title:
           serializationManager.deserialize<String>(jsonSerialization['title']),
+      cover:
+          serializationManager.deserialize<String>(jsonSerialization['cover']),
       image:
           serializationManager.deserialize<String>(jsonSerialization['image']),
+      bookId:
+          serializationManager.deserialize<int>(jsonSerialization['bookId']),
+      book: serializationManager
+          .deserialize<_i2.Book?>(jsonSerialization['book']),
+      libraries: serializationManager
+          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
     );
   }
 
@@ -42,9 +60,15 @@ abstract class Espisode extends _i1.TableRow {
 
   String title;
 
+  String cover;
+
   String image;
 
-  int? _bookEspisodesBookId;
+  int bookId;
+
+  _i2.Book? book;
+
+  List<_i2.Library>? libraries;
 
   @override
   _i1.Table get table => t;
@@ -52,25 +76,23 @@ abstract class Espisode extends _i1.TableRow {
   Espisode copyWith({
     int? id,
     String? title,
+    String? cover,
     String? image,
+    int? bookId,
+    _i2.Book? book,
+    List<_i2.Library>? libraries,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'title': title,
+      'cover': cover,
       'image': image,
-    };
-  }
-
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  Map<String, dynamic> toJsonForDatabase() {
-    return {
-      'id': id,
-      'title': title,
-      'image': image,
-      '_bookEspisodesBookId': _bookEspisodesBookId,
+      'bookId': bookId,
+      if (book != null) 'book': book?.toJson(),
+      if (libraries != null)
+        'libraries': libraries?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -79,155 +101,23 @@ abstract class Espisode extends _i1.TableRow {
     return {
       if (id != null) 'id': id,
       'title': title,
+      'cover': cover,
       'image': image,
-      if (_bookEspisodesBookId != null)
-        '_bookEspisodesBookId': _bookEspisodesBookId,
+      'bookId': bookId,
+      if (book != null) 'book': book?.allToJson(),
+      if (libraries != null)
+        'libraries': libraries?.toJson(valueToJson: (v) => v.allToJson()),
     };
   }
 
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  void setColumn(
-    String columnName,
-    value,
-  ) {
-    switch (columnName) {
-      case 'id':
-        id = value;
-        return;
-      case 'title':
-        title = value;
-        return;
-      case 'image':
-        image = value;
-        return;
-      case '_bookEspisodesBookId':
-        _bookEspisodesBookId = value;
-        return;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<Espisode>> find(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EspisodeTable>? where,
-    int? limit,
-    int? offset,
-    _i1.Column? orderBy,
-    List<_i1.Order>? orderByList,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.find<Espisode>(
-      where: where != null ? where(Espisode.t) : null,
-      limit: limit,
-      offset: offset,
-      orderBy: orderBy,
-      orderByList: orderByList,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
+  static EspisodeInclude include({
+    _i2.BookInclude? book,
+    _i2.LibraryIncludeList? libraries,
+  }) {
+    return EspisodeInclude._(
+      book: book,
+      libraries: libraries,
     );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<Espisode?> findSingleRow(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EspisodeTable>? where,
-    int? offset,
-    _i1.Column? orderBy,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.findSingleRow<Espisode>(
-      where: where != null ? where(Espisode.t) : null,
-      offset: offset,
-      orderBy: orderBy,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<Espisode?> findById(
-    _i1.Session session,
-    int id,
-  ) async {
-    return session.db.findById<Espisode>(id);
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
-  static Future<int> delete(
-    _i1.Session session, {
-    required _i1.WhereExpressionBuilder<EspisodeTable> where,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.delete<Espisode>(
-      where: where(Espisode.t),
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
-  static Future<bool> deleteRow(
-    _i1.Session session,
-    Espisode row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.deleteRow(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
-  static Future<bool> update(
-    _i1.Session session,
-    Espisode row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.update(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated(
-      'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
-  static Future<void> insert(
-    _i1.Session session,
-    Espisode row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.insert(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
-  static Future<int> count(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<EspisodeTable>? where,
-    int? limit,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.count<Espisode>(
-      where: where != null ? where(Espisode.t) : null,
-      limit: limit,
-      useCache: useCache,
-      transaction: transaction,
-    );
-  }
-
-  static EspisodeInclude include() {
-    return EspisodeInclude._();
   }
 
   static EspisodeIncludeList includeList({
@@ -257,58 +147,41 @@ class _EspisodeImpl extends Espisode {
   _EspisodeImpl({
     int? id,
     required String title,
+    required String cover,
     required String image,
+    required int bookId,
+    _i2.Book? book,
+    List<_i2.Library>? libraries,
   }) : super._(
           id: id,
           title: title,
+          cover: cover,
           image: image,
+          bookId: bookId,
+          book: book,
+          libraries: libraries,
         );
 
   @override
   Espisode copyWith({
     Object? id = _Undefined,
     String? title,
+    String? cover,
     String? image,
+    int? bookId,
+    Object? book = _Undefined,
+    Object? libraries = _Undefined,
   }) {
     return Espisode(
       id: id is int? ? id : this.id,
       title: title ?? this.title,
+      cover: cover ?? this.cover,
       image: image ?? this.image,
+      bookId: bookId ?? this.bookId,
+      book: book is _i2.Book? ? book : this.book?.copyWith(),
+      libraries:
+          libraries is List<_i2.Library>? ? libraries : this.libraries?.clone(),
     );
-  }
-}
-
-class EspisodeImplicit extends _EspisodeImpl {
-  EspisodeImplicit._({
-    int? id,
-    required String title,
-    required String image,
-    this.$_bookEspisodesBookId,
-  }) : super(
-          id: id,
-          title: title,
-          image: image,
-        );
-
-  factory EspisodeImplicit(
-    Espisode espisode, {
-    int? $_bookEspisodesBookId,
-  }) {
-    return EspisodeImplicit._(
-      id: espisode.id,
-      title: espisode.title,
-      image: espisode.image,
-      $_bookEspisodesBookId: $_bookEspisodesBookId,
-    );
-  }
-
-  int? $_bookEspisodesBookId;
-
-  @override
-  Map<String, dynamic> allToJson() {
-    var jsonMap = super.allToJson();
-    jsonMap.addAll({'_bookEspisodesBookId': $_bookEspisodesBookId});
-    return jsonMap;
   }
 }
 
@@ -318,39 +191,117 @@ class EspisodeTable extends _i1.Table {
       'title',
       this,
     );
+    cover = _i1.ColumnString(
+      'cover',
+      this,
+    );
     image = _i1.ColumnString(
       'image',
       this,
     );
-    $_bookEspisodesBookId = _i1.ColumnInt(
-      '_bookEspisodesBookId',
+    bookId = _i1.ColumnInt(
+      'bookId',
       this,
     );
   }
 
   late final _i1.ColumnString title;
 
+  late final _i1.ColumnString cover;
+
   late final _i1.ColumnString image;
 
-  late final _i1.ColumnInt $_bookEspisodesBookId;
+  late final _i1.ColumnInt bookId;
+
+  _i2.BookTable? _book;
+
+  _i2.LibraryTable? ___libraries;
+
+  _i1.ManyRelation<_i2.LibraryTable>? _libraries;
+
+  _i2.BookTable get book {
+    if (_book != null) return _book!;
+    _book = _i1.createRelationTable(
+      relationFieldName: 'book',
+      field: Espisode.t.bookId,
+      foreignField: _i2.Book.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.BookTable(tableRelation: foreignTableRelation),
+    );
+    return _book!;
+  }
+
+  _i2.LibraryTable get __libraries {
+    if (___libraries != null) return ___libraries!;
+    ___libraries = _i1.createRelationTable(
+      relationFieldName: '__libraries',
+      field: Espisode.t.id,
+      foreignField: _i2.Library.t.espisodeId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.LibraryTable(tableRelation: foreignTableRelation),
+    );
+    return ___libraries!;
+  }
+
+  _i1.ManyRelation<_i2.LibraryTable> get libraries {
+    if (_libraries != null) return _libraries!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'libraries',
+      field: Espisode.t.id,
+      foreignField: _i2.Library.t.espisodeId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.LibraryTable(tableRelation: foreignTableRelation),
+    );
+    _libraries = _i1.ManyRelation<_i2.LibraryTable>(
+      tableWithRelations: relationTable,
+      table: _i2.LibraryTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _libraries!;
+  }
 
   @override
   List<_i1.Column> get columns => [
         id,
         title,
+        cover,
         image,
-        $_bookEspisodesBookId,
+        bookId,
       ];
-}
-
-@Deprecated('Use EspisodeTable.t instead.')
-EspisodeTable tEspisode = EspisodeTable();
-
-class EspisodeInclude extends _i1.IncludeObject {
-  EspisodeInclude._();
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'book') {
+      return book;
+    }
+    if (relationField == 'libraries') {
+      return __libraries;
+    }
+    return null;
+  }
+}
+
+class EspisodeInclude extends _i1.IncludeObject {
+  EspisodeInclude._({
+    _i2.BookInclude? book,
+    _i2.LibraryIncludeList? libraries,
+  }) {
+    _book = book;
+    _libraries = libraries;
+  }
+
+  _i2.BookInclude? _book;
+
+  _i2.LibraryIncludeList? _libraries;
+
+  @override
+  Map<String, _i1.Include?> get includes => {
+        'book': _book,
+        'libraries': _libraries,
+      };
 
   @override
   _i1.Table get table => Espisode.t;
@@ -379,6 +330,14 @@ class EspisodeIncludeList extends _i1.IncludeList {
 class EspisodeRepository {
   const EspisodeRepository._();
 
+  final attach = const EspisodeAttachRepository._();
+
+  final attachRow = const EspisodeAttachRowRepository._();
+
+  final detach = const EspisodeDetachRepository._();
+
+  final detachRow = const EspisodeDetachRowRepository._();
+
   Future<List<Espisode>> find(
     _i1.Session session, {
     _i1.WhereExpressionBuilder<EspisodeTable>? where,
@@ -388,8 +347,9 @@ class EspisodeRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<EspisodeTable>? orderByList,
     _i1.Transaction? transaction,
+    EspisodeInclude? include,
   }) async {
-    return session.dbNext.find<Espisode>(
+    return session.db.find<Espisode>(
       where: where?.call(Espisode.t),
       orderBy: orderBy?.call(Espisode.t),
       orderByList: orderByList?.call(Espisode.t),
@@ -397,6 +357,7 @@ class EspisodeRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -408,14 +369,16 @@ class EspisodeRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<EspisodeTable>? orderByList,
     _i1.Transaction? transaction,
+    EspisodeInclude? include,
   }) async {
-    return session.dbNext.findFirstRow<Espisode>(
+    return session.db.findFirstRow<Espisode>(
       where: where?.call(Espisode.t),
       orderBy: orderBy?.call(Espisode.t),
       orderByList: orderByList?.call(Espisode.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -423,10 +386,12 @@ class EspisodeRepository {
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
+    EspisodeInclude? include,
   }) async {
-    return session.dbNext.findById<Espisode>(
+    return session.db.findById<Espisode>(
       id,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -435,7 +400,7 @@ class EspisodeRepository {
     List<Espisode> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<Espisode>(
+    return session.db.insert<Espisode>(
       rows,
       transaction: transaction,
     );
@@ -446,7 +411,7 @@ class EspisodeRepository {
     Espisode row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<Espisode>(
+    return session.db.insertRow<Espisode>(
       row,
       transaction: transaction,
     );
@@ -458,7 +423,7 @@ class EspisodeRepository {
     _i1.ColumnSelections<EspisodeTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<Espisode>(
+    return session.db.update<Espisode>(
       rows,
       columns: columns?.call(Espisode.t),
       transaction: transaction,
@@ -471,7 +436,7 @@ class EspisodeRepository {
     _i1.ColumnSelections<EspisodeTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<Espisode>(
+    return session.db.updateRow<Espisode>(
       row,
       columns: columns?.call(Espisode.t),
       transaction: transaction,
@@ -483,7 +448,7 @@ class EspisodeRepository {
     List<Espisode> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<Espisode>(
+    return session.db.delete<Espisode>(
       rows,
       transaction: transaction,
     );
@@ -494,7 +459,7 @@ class EspisodeRepository {
     Espisode row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<Espisode>(
+    return session.db.deleteRow<Espisode>(
       row,
       transaction: transaction,
     );
@@ -505,7 +470,7 @@ class EspisodeRepository {
     required _i1.WhereExpressionBuilder<EspisodeTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<Espisode>(
+    return session.db.deleteWhere<Espisode>(
       where: where(Espisode.t),
       transaction: transaction,
     );
@@ -517,10 +482,114 @@ class EspisodeRepository {
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<Espisode>(
+    return session.db.count<Espisode>(
       where: where?.call(Espisode.t),
       limit: limit,
       transaction: transaction,
+    );
+  }
+}
+
+class EspisodeAttachRepository {
+  const EspisodeAttachRepository._();
+
+  Future<void> libraries(
+    _i1.Session session,
+    Espisode espisode,
+    List<_i2.Library> library,
+  ) async {
+    if (library.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('library.id');
+    }
+    if (espisode.id == null) {
+      throw ArgumentError.notNull('espisode.id');
+    }
+
+    var $library =
+        library.map((e) => e.copyWith(espisodeId: espisode.id)).toList();
+    await session.db.update<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.espisodeId],
+    );
+  }
+}
+
+class EspisodeAttachRowRepository {
+  const EspisodeAttachRowRepository._();
+
+  Future<void> book(
+    _i1.Session session,
+    Espisode espisode,
+    _i2.Book book,
+  ) async {
+    if (espisode.id == null) {
+      throw ArgumentError.notNull('espisode.id');
+    }
+    if (book.id == null) {
+      throw ArgumentError.notNull('book.id');
+    }
+
+    var $espisode = espisode.copyWith(bookId: book.id);
+    await session.db.updateRow<Espisode>(
+      $espisode,
+      columns: [Espisode.t.bookId],
+    );
+  }
+
+  Future<void> libraries(
+    _i1.Session session,
+    Espisode espisode,
+    _i2.Library library,
+  ) async {
+    if (library.id == null) {
+      throw ArgumentError.notNull('library.id');
+    }
+    if (espisode.id == null) {
+      throw ArgumentError.notNull('espisode.id');
+    }
+
+    var $library = library.copyWith(espisodeId: espisode.id);
+    await session.db.updateRow<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.espisodeId],
+    );
+  }
+}
+
+class EspisodeDetachRepository {
+  const EspisodeDetachRepository._();
+
+  Future<void> libraries(
+    _i1.Session session,
+    List<_i2.Library> library,
+  ) async {
+    if (library.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('library.id');
+    }
+
+    var $library = library.map((e) => e.copyWith(espisodeId: null)).toList();
+    await session.db.update<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.espisodeId],
+    );
+  }
+}
+
+class EspisodeDetachRowRepository {
+  const EspisodeDetachRowRepository._();
+
+  Future<void> libraries(
+    _i1.Session session,
+    _i2.Library library,
+  ) async {
+    if (library.id == null) {
+      throw ArgumentError.notNull('library.id');
+    }
+
+    var $library = library.copyWith(espisodeId: null);
+    await session.db.updateRow<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.espisodeId],
     );
   }
 }

@@ -16,14 +16,24 @@ abstract class Book extends _i1.SerializableEntity {
     this.id,
     required this.title,
     required this.description,
+    required this.cover,
     this.espisodes,
+    required this.categoryId,
+    this.category,
+    this.libraries,
+    this.comments,
   });
 
   factory Book({
     int? id,
     required String title,
     required String description,
+    required String cover,
     List<_i2.Espisode>? espisodes,
+    required int categoryId,
+    _i2.Category? category,
+    List<_i2.Library>? libraries,
+    List<_i2.Comment>? comments,
   }) = _BookImpl;
 
   factory Book.fromJson(
@@ -36,8 +46,18 @@ abstract class Book extends _i1.SerializableEntity {
           serializationManager.deserialize<String>(jsonSerialization['title']),
       description: serializationManager
           .deserialize<String>(jsonSerialization['description']),
+      cover:
+          serializationManager.deserialize<String>(jsonSerialization['cover']),
       espisodes: serializationManager
           .deserialize<List<_i2.Espisode>?>(jsonSerialization['espisodes']),
+      categoryId: serializationManager
+          .deserialize<int>(jsonSerialization['categoryId']),
+      category: serializationManager
+          .deserialize<_i2.Category?>(jsonSerialization['category']),
+      libraries: serializationManager
+          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
+      comments: serializationManager
+          .deserialize<List<_i2.Comment>?>(jsonSerialization['comments']),
     );
   }
 
@@ -50,13 +70,28 @@ abstract class Book extends _i1.SerializableEntity {
 
   String description;
 
+  String cover;
+
   List<_i2.Espisode>? espisodes;
+
+  int categoryId;
+
+  _i2.Category? category;
+
+  List<_i2.Library>? libraries;
+
+  List<_i2.Comment>? comments;
 
   Book copyWith({
     int? id,
     String? title,
     String? description,
+    String? cover,
     List<_i2.Espisode>? espisodes,
+    int? categoryId,
+    _i2.Category? category,
+    List<_i2.Library>? libraries,
+    List<_i2.Comment>? comments,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -64,8 +99,15 @@ abstract class Book extends _i1.SerializableEntity {
       if (id != null) 'id': id,
       'title': title,
       'description': description,
+      'cover': cover,
       if (espisodes != null)
         'espisodes': espisodes?.toJson(valueToJson: (v) => v.toJson()),
+      'categoryId': categoryId,
+      if (category != null) 'category': category?.toJson(),
+      if (libraries != null)
+        'libraries': libraries?.toJson(valueToJson: (v) => v.toJson()),
+      if (comments != null)
+        'comments': comments?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 }
@@ -77,12 +119,22 @@ class _BookImpl extends Book {
     int? id,
     required String title,
     required String description,
+    required String cover,
     List<_i2.Espisode>? espisodes,
+    required int categoryId,
+    _i2.Category? category,
+    List<_i2.Library>? libraries,
+    List<_i2.Comment>? comments,
   }) : super._(
           id: id,
           title: title,
           description: description,
+          cover: cover,
           espisodes: espisodes,
+          categoryId: categoryId,
+          category: category,
+          libraries: libraries,
+          comments: comments,
         );
 
   @override
@@ -90,15 +142,28 @@ class _BookImpl extends Book {
     Object? id = _Undefined,
     String? title,
     String? description,
+    String? cover,
     Object? espisodes = _Undefined,
+    int? categoryId,
+    Object? category = _Undefined,
+    Object? libraries = _Undefined,
+    Object? comments = _Undefined,
   }) {
     return Book(
       id: id is int? ? id : this.id,
       title: title ?? this.title,
       description: description ?? this.description,
+      cover: cover ?? this.cover,
       espisodes: espisodes is List<_i2.Espisode>?
           ? espisodes
           : this.espisodes?.clone(),
+      categoryId: categoryId ?? this.categoryId,
+      category:
+          category is _i2.Category? ? category : this.category?.copyWith(),
+      libraries:
+          libraries is List<_i2.Library>? ? libraries : this.libraries?.clone(),
+      comments:
+          comments is List<_i2.Comment>? ? comments : this.comments?.clone(),
     );
   }
 }

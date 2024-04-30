@@ -1,4 +1,7 @@
 import 'package:serverpod/serverpod.dart';
+import 'package:webtoon_server/src/generated/book.dart';
+import 'package:webtoon_server/src/generated/category.dart';
+import 'package:webtoon_server/src/generated/espisode.dart';
 
 // This is an example endpoint of your server. It's best practice to use the
 // `Endpoint` ending of the class name, but it will be removed when accessing
@@ -7,7 +10,7 @@ import 'package:serverpod/serverpod.dart';
 
 // After adding or modifying an endpoint, you will need to run
 // `serverpod generate` to update the server and client code.
-class BookEndpoint extends Endpoint {
+class CategoryEndpoint extends Endpoint {
   // You create methods in your endpoint which are accessible from the client by
   // creating a public method with `Session` as its first parameter.
   // `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`,
@@ -19,5 +22,15 @@ class BookEndpoint extends Endpoint {
     return 'Hello $name';
   }
 
-  
+  // get categories with books
+  Future<List<Category>> getCategories(Session session) async {
+    final result = Category.db.find(
+      session,
+      include: Category.include(
+        books: Book.includeList(),
+      ),
+    );
+
+    return result;
+  }
 }

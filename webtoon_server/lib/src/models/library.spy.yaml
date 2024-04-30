@@ -7,10 +7,10 @@
 # your yaml-files.
 
 # Name of the class to generate.
-class: Espisode
+class: Library
 
 # Add the table key, if this class represents a row in the database.
-table: espisode
+table: library
 
 # The fields (and columns if connected to the database) of the class. Supported types are
 # `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`,
@@ -18,8 +18,12 @@ table: espisode
 # You can also add lists of objects and types have support for null safety.
 # Eg. `List<int>?` or `List<MyOtherClass?>`.
 fields:
-  title: String
-  cover: String
-  image: String
-  book: Book?, relation(name=book_espisodes)
-  libraries: List<Library>?, relation(name=espisode_libraries)
+  userInfo: module:auth:UserInfo?, relation
+  espisode: Espisode?, relation(name=espisode_libraries)
+  book: Book?, relation(name=book_libraries)
+
+indexes:
+  user_library_unique_idx:
+    fields: userInfoId, bookId, espisodeId
+    unique: true
+  

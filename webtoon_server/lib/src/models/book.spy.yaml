@@ -20,4 +20,8 @@ table: book
 fields:
   title: String
   description: String
-  espisodes: List<Espisode>?, relation
+  cover: String
+  espisodes: List<Espisode>?, relation(name=book_espisodes)
+  category: Category?, relation(name=category_book)
+  libraries: List<Library>?, relation(name=book_libraries)
+  comments: List<Comment>?, relation(name=book_comments)

@@ -9,18 +9,27 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 abstract class Espisode extends _i1.SerializableEntity {
   Espisode._({
     this.id,
     required this.title,
+    required this.cover,
     required this.image,
+    required this.bookId,
+    this.book,
+    this.libraries,
   });
 
   factory Espisode({
     int? id,
     required String title,
+    required String cover,
     required String image,
+    required int bookId,
+    _i2.Book? book,
+    List<_i2.Library>? libraries,
   }) = _EspisodeImpl;
 
   factory Espisode.fromJson(
@@ -31,8 +40,16 @@ abstract class Espisode extends _i1.SerializableEntity {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       title:
           serializationManager.deserialize<String>(jsonSerialization['title']),
+      cover:
+          serializationManager.deserialize<String>(jsonSerialization['cover']),
       image:
           serializationManager.deserialize<String>(jsonSerialization['image']),
+      bookId:
+          serializationManager.deserialize<int>(jsonSerialization['bookId']),
+      book: serializationManager
+          .deserialize<_i2.Book?>(jsonSerialization['book']),
+      libraries: serializationManager
+          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
     );
   }
 
@@ -43,19 +60,36 @@ abstract class Espisode extends _i1.SerializableEntity {
 
   String title;
 
+  String cover;
+
   String image;
+
+  int bookId;
+
+  _i2.Book? book;
+
+  List<_i2.Library>? libraries;
 
   Espisode copyWith({
     int? id,
     String? title,
+    String? cover,
     String? image,
+    int? bookId,
+    _i2.Book? book,
+    List<_i2.Library>? libraries,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'title': title,
+      'cover': cover,
       'image': image,
+      'bookId': bookId,
+      if (book != null) 'book': book?.toJson(),
+      if (libraries != null)
+        'libraries': libraries?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 }
@@ -66,23 +100,40 @@ class _EspisodeImpl extends Espisode {
   _EspisodeImpl({
     int? id,
     required String title,
+    required String cover,
     required String image,
+    required int bookId,
+    _i2.Book? book,
+    List<_i2.Library>? libraries,
   }) : super._(
           id: id,
           title: title,
+          cover: cover,
           image: image,
+          bookId: bookId,
+          book: book,
+          libraries: libraries,
         );
 
   @override
   Espisode copyWith({
     Object? id = _Undefined,
     String? title,
+    String? cover,
     String? image,
+    int? bookId,
+    Object? book = _Undefined,
+    Object? libraries = _Undefined,
   }) {
     return Espisode(
       id: id is int? ? id : this.id,
       title: title ?? this.title,
+      cover: cover ?? this.cover,
       image: image ?? this.image,
+      bookId: bookId ?? this.bookId,
+      book: book is _i2.Book? ? book : this.book?.copyWith(),
+      libraries:
+          libraries is List<_i2.Library>? ? libraries : this.libraries?.clone(),
     );
   }
 }

@@ -1,4 +1,7 @@
 book:
   - hello:
+category:
+  - hello:
+  - getCategories:
 example:
   - hello:

@@ -17,14 +17,24 @@ abstract class Book extends _i1.TableRow {
     int? id,
     required this.title,
     required this.description,
+    required this.cover,
     this.espisodes,
+    required this.categoryId,
+    this.category,
+    this.libraries,
+    this.comments,
   }) : super(id);
 
   factory Book({
     int? id,
     required String title,
     required String description,
+    required String cover,
     List<_i2.Espisode>? espisodes,
+    required int categoryId,
+    _i2.Category? category,
+    List<_i2.Library>? libraries,
+    List<_i2.Comment>? comments,
   }) = _BookImpl;
 
   factory Book.fromJson(
@@ -37,8 +47,18 @@ abstract class Book extends _i1.TableRow {
           serializationManager.deserialize<String>(jsonSerialization['title']),
       description: serializationManager
           .deserialize<String>(jsonSerialization['description']),
+      cover:
+          serializationManager.deserialize<String>(jsonSerialization['cover']),
       espisodes: serializationManager
           .deserialize<List<_i2.Espisode>?>(jsonSerialization['espisodes']),
+      categoryId: serializationManager
+          .deserialize<int>(jsonSerialization['categoryId']),
+      category: serializationManager
+          .deserialize<_i2.Category?>(jsonSerialization['category']),
+      libraries: serializationManager
+          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
+      comments: serializationManager
+          .deserialize<List<_i2.Comment>?>(jsonSerialization['comments']),
     );
   }
 
@@ -50,7 +70,17 @@ abstract class Book extends _i1.TableRow {
 
   String description;
 
+  String cover;
+
   List<_i2.Espisode>? espisodes;
+
+  int categoryId;
+
+  _i2.Category? category;
+
+  List<_i2.Library>? libraries;
+
+  List<_i2.Comment>? comments;
 
   @override
   _i1.Table get table => t;
@@ -59,7 +89,12 @@ abstract class Book extends _i1.TableRow {
     int? id,
     String? title,
     String? description,
+    String? cover,
     List<_i2.Espisode>? espisodes,
+    int? categoryId,
+    _i2.Category? category,
+    List<_i2.Library>? libraries,
+    List<_i2.Comment>? comments,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -67,18 +102,15 @@ abstract class Book extends _i1.TableRow {
       if (id != null) 'id': id,
       'title': title,
       'description': description,
+      'cover': cover,
       if (espisodes != null)
         'espisodes': espisodes?.toJson(valueToJson: (v) => v.toJson()),
-    };
-  }
-
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  Map<String, dynamic> toJsonForDatabase() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
+      'categoryId': categoryId,
+      if (category != null) 'category': category?.toJson(),
+      if (libraries != null)
+        'libraries': libraries?.toJson(valueToJson: (v) => v.toJson()),
+      if (comments != null)
+        'comments': comments?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -88,159 +120,30 @@ abstract class Book extends _i1.TableRow {
       if (id != null) 'id': id,
       'title': title,
       'description': description,
+      'cover': cover,
       if (espisodes != null)
         'espisodes': espisodes?.toJson(valueToJson: (v) => v.allToJson()),
+      'categoryId': categoryId,
+      if (category != null) 'category': category?.allToJson(),
+      if (libraries != null)
+        'libraries': libraries?.toJson(valueToJson: (v) => v.allToJson()),
+      if (comments != null)
+        'comments': comments?.toJson(valueToJson: (v) => v.allToJson()),
     };
   }
 
-  @override
-  @Deprecated('Will be removed in 2.0.0')
-  void setColumn(
-    String columnName,
-    value,
-  ) {
-    switch (columnName) {
-      case 'id':
-        id = value;
-        return;
-      case 'title':
-        title = value;
-        return;
-      case 'description':
-        description = value;
-        return;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<Book>> find(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<BookTable>? where,
-    int? limit,
-    int? offset,
-    _i1.Column? orderBy,
-    List<_i1.Order>? orderByList,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    BookInclude? include,
-  }) async {
-    return session.db.find<Book>(
-      where: where != null ? where(Book.t) : null,
-      limit: limit,
-      offset: offset,
-      orderBy: orderBy,
-      orderByList: orderByList,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
+  static BookInclude include({
+    _i2.EspisodeIncludeList? espisodes,
+    _i2.CategoryInclude? category,
+    _i2.LibraryIncludeList? libraries,
+    _i2.CommentIncludeList? comments,
+  }) {
+    return BookInclude._(
+      espisodes: espisodes,
+      category: category,
+      libraries: libraries,
+      comments: comments,
     );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<Book?> findSingleRow(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<BookTable>? where,
-    int? offset,
-    _i1.Column? orderBy,
-    bool orderDescending = false,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-    BookInclude? include,
-  }) async {
-    return session.db.findSingleRow<Book>(
-      where: where != null ? where(Book.t) : null,
-      offset: offset,
-      orderBy: orderBy,
-      orderDescending: orderDescending,
-      useCache: useCache,
-      transaction: transaction,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<Book?> findById(
-    _i1.Session session,
-    int id, {
-    BookInclude? include,
-  }) async {
-    return session.db.findById<Book>(
-      id,
-      include: include,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
-  static Future<int> delete(
-    _i1.Session session, {
-    required _i1.WhereExpressionBuilder<BookTable> where,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.delete<Book>(
-      where: where(Book.t),
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
-  static Future<bool> deleteRow(
-    _i1.Session session,
-    Book row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.deleteRow(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
-  static Future<bool> update(
-    _i1.Session session,
-    Book row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.update(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated(
-      'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
-  static Future<void> insert(
-    _i1.Session session,
-    Book row, {
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.insert(
-      row,
-      transaction: transaction,
-    );
-  }
-
-  @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
-  static Future<int> count(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<BookTable>? where,
-    int? limit,
-    bool useCache = true,
-    _i1.Transaction? transaction,
-  }) async {
-    return session.db.count<Book>(
-      where: where != null ? where(Book.t) : null,
-      limit: limit,
-      useCache: useCache,
-      transaction: transaction,
-    );
-  }
-
-  static BookInclude include({_i2.EspisodeIncludeList? espisodes}) {
-    return BookInclude._(espisodes: espisodes);
   }
 
   static BookIncludeList includeList({
@@ -271,12 +174,22 @@ class _BookImpl extends Book {
     int? id,
     required String title,
     required String description,
+    required String cover,
     List<_i2.Espisode>? espisodes,
+    required int categoryId,
+    _i2.Category? category,
+    List<_i2.Library>? libraries,
+    List<_i2.Comment>? comments,
   }) : super._(
           id: id,
           title: title,
           description: description,
+          cover: cover,
           espisodes: espisodes,
+          categoryId: categoryId,
+          category: category,
+          libraries: libraries,
+          comments: comments,
         );
 
   @override
@@ -284,15 +197,28 @@ class _BookImpl extends Book {
     Object? id = _Undefined,
     String? title,
     String? description,
+    String? cover,
     Object? espisodes = _Undefined,
+    int? categoryId,
+    Object? category = _Undefined,
+    Object? libraries = _Undefined,
+    Object? comments = _Undefined,
   }) {
     return Book(
       id: id is int? ? id : this.id,
       title: title ?? this.title,
       description: description ?? this.description,
+      cover: cover ?? this.cover,
       espisodes: espisodes is List<_i2.Espisode>?
           ? espisodes
           : this.espisodes?.clone(),
+      categoryId: categoryId ?? this.categoryId,
+      category:
+          category is _i2.Category? ? category : this.category?.copyWith(),
+      libraries:
+          libraries is List<_i2.Library>? ? libraries : this.libraries?.clone(),
+      comments:
+          comments is List<_i2.Comment>? ? comments : this.comments?.clone(),
     );
   }
 }
@@ -307,22 +233,44 @@ class BookTable extends _i1.Table {
       'description',
       this,
     );
+    cover = _i1.ColumnString(
+      'cover',
+      this,
+    );
+    categoryId = _i1.ColumnInt(
+      'categoryId',
+      this,
+    );
   }
 
   late final _i1.ColumnString title;
 
   late final _i1.ColumnString description;
 
+  late final _i1.ColumnString cover;
+
   _i2.EspisodeTable? ___espisodes;
 
   _i1.ManyRelation<_i2.EspisodeTable>? _espisodes;
+
+  late final _i1.ColumnInt categoryId;
+
+  _i2.CategoryTable? _category;
+
+  _i2.LibraryTable? ___libraries;
+
+  _i1.ManyRelation<_i2.LibraryTable>? _libraries;
+
+  _i2.CommentTable? ___comments;
+
+  _i1.ManyRelation<_i2.CommentTable>? _comments;
 
   _i2.EspisodeTable get __espisodes {
     if (___espisodes != null) return ___espisodes!;
     ___espisodes = _i1.createRelationTable(
       relationFieldName: '__espisodes',
       field: Book.t.id,
-      foreignField: _i2.Espisode.t.$_bookEspisodesBookId,
+      foreignField: _i2.Espisode.t.bookId,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
           _i2.EspisodeTable(tableRelation: foreignTableRelation),
@@ -330,12 +278,51 @@ class BookTable extends _i1.Table {
     return ___espisodes!;
   }
 
+  _i2.CategoryTable get category {
+    if (_category != null) return _category!;
+    _category = _i1.createRelationTable(
+      relationFieldName: 'category',
+      field: Book.t.categoryId,
+      foreignField: _i2.Category.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.CategoryTable(tableRelation: foreignTableRelation),
+    );
+    return _category!;
+  }
+
+  _i2.LibraryTable get __libraries {
+    if (___libraries != null) return ___libraries!;
+    ___libraries = _i1.createRelationTable(
+      relationFieldName: '__libraries',
+      field: Book.t.id,
+      foreignField: _i2.Library.t.bookId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.LibraryTable(tableRelation: foreignTableRelation),
+    );
+    return ___libraries!;
+  }
+
+  _i2.CommentTable get __comments {
+    if (___comments != null) return ___comments!;
+    ___comments = _i1.createRelationTable(
+      relationFieldName: '__comments',
+      field: Book.t.id,
+      foreignField: _i2.Comment.t.bookId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.CommentTable(tableRelation: foreignTableRelation),
+    );
+    return ___comments!;
+  }
+
   _i1.ManyRelation<_i2.EspisodeTable> get espisodes {
     if (_espisodes != null) return _espisodes!;
     var relationTable = _i1.createRelationTable(
       relationFieldName: 'espisodes',
       field: Book.t.id,
-      foreignField: _i2.Espisode.t.$_bookEspisodesBookId,
+      foreignField: _i2.Espisode.t.bookId,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
           _i2.EspisodeTable(tableRelation: foreignTableRelation),
@@ -348,11 +335,49 @@ class BookTable extends _i1.Table {
     return _espisodes!;
   }
 
+  _i1.ManyRelation<_i2.LibraryTable> get libraries {
+    if (_libraries != null) return _libraries!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'libraries',
+      field: Book.t.id,
+      foreignField: _i2.Library.t.bookId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.LibraryTable(tableRelation: foreignTableRelation),
+    );
+    _libraries = _i1.ManyRelation<_i2.LibraryTable>(
+      tableWithRelations: relationTable,
+      table: _i2.LibraryTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _libraries!;
+  }
+
+  _i1.ManyRelation<_i2.CommentTable> get comments {
+    if (_comments != null) return _comments!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'comments',
+      field: Book.t.id,
+      foreignField: _i2.Comment.t.bookId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.CommentTable(tableRelation: foreignTableRelation),
+    );
+    _comments = _i1.ManyRelation<_i2.CommentTable>(
+      tableWithRelations: relationTable,
+      table: _i2.CommentTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _comments!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
         title,
         description,
+        cover,
+        categoryId,
       ];
 
   @override
@@ -360,22 +385,47 @@ class BookTable extends _i1.Table {
     if (relationField == 'espisodes') {
       return __espisodes;
     }
+    if (relationField == 'category') {
+      return category;
+    }
+    if (relationField == 'libraries') {
+      return __libraries;
+    }
+    if (relationField == 'comments') {
+      return __comments;
+    }
     return null;
   }
 }
 
-@Deprecated('Use BookTable.t instead.')
-BookTable tBook = BookTable();
-
 class BookInclude extends _i1.IncludeObject {
-  BookInclude._({_i2.EspisodeIncludeList? espisodes}) {
+  BookInclude._({
+    _i2.EspisodeIncludeList? espisodes,
+    _i2.CategoryInclude? category,
+    _i2.LibraryIncludeList? libraries,
+    _i2.CommentIncludeList? comments,
+  }) {
     _espisodes = espisodes;
+    _category = category;
+    _libraries = libraries;
+    _comments = comments;
   }
 
   _i2.EspisodeIncludeList? _espisodes;
 
+  _i2.CategoryInclude? _category;
+
+  _i2.LibraryIncludeList? _libraries;
+
+  _i2.CommentIncludeList? _comments;
+
   @override
-  Map<String, _i1.Include?> get includes => {'espisodes': _espisodes};
+  Map<String, _i1.Include?> get includes => {
+        'espisodes': _espisodes,
+        'category': _category,
+        'libraries': _libraries,
+        'comments': _comments,
+      };
 
   @override
   _i1.Table get table => Book.t;
@@ -423,7 +473,7 @@ class BookRepository {
     _i1.Transaction? transaction,
     BookInclude? include,
   }) async {
-    return session.dbNext.find<Book>(
+    return session.db.find<Book>(
       where: where?.call(Book.t),
       orderBy: orderBy?.call(Book.t),
       orderByList: orderByList?.call(Book.t),
@@ -445,7 +495,7 @@ class BookRepository {
     _i1.Transaction? transaction,
     BookInclude? include,
   }) async {
-    return session.dbNext.findFirstRow<Book>(
+    return session.db.findFirstRow<Book>(
       where: where?.call(Book.t),
       orderBy: orderBy?.call(Book.t),
       orderByList: orderByList?.call(Book.t),
@@ -462,7 +512,7 @@ class BookRepository {
     _i1.Transaction? transaction,
     BookInclude? include,
   }) async {
-    return session.dbNext.findById<Book>(
+    return session.db.findById<Book>(
       id,
       transaction: transaction,
       include: include,
@@ -474,7 +524,7 @@ class BookRepository {
     List<Book> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<Book>(
+    return session.db.insert<Book>(
       rows,
       transaction: transaction,
     );
@@ -485,7 +535,7 @@ class BookRepository {
     Book row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<Book>(
+    return session.db.insertRow<Book>(
       row,
       transaction: transaction,
     );
@@ -497,7 +547,7 @@ class BookRepository {
     _i1.ColumnSelections<BookTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<Book>(
+    return session.db.update<Book>(
       rows,
       columns: columns?.call(Book.t),
       transaction: transaction,
@@ -510,7 +560,7 @@ class BookRepository {
     _i1.ColumnSelections<BookTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<Book>(
+    return session.db.updateRow<Book>(
       row,
       columns: columns?.call(Book.t),
       transaction: transaction,
@@ -522,7 +572,7 @@ class BookRepository {
     List<Book> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<Book>(
+    return session.db.delete<Book>(
       rows,
       transaction: transaction,
     );
@@ -533,7 +583,7 @@ class BookRepository {
     Book row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<Book>(
+    return session.db.deleteRow<Book>(
       row,
       transaction: transaction,
     );
@@ -544,7 +594,7 @@ class BookRepository {
     required _i1.WhereExpressionBuilder<BookTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<Book>(
+    return session.db.deleteWhere<Book>(
       where: where(Book.t),
       transaction: transaction,
     );
@@ -556,7 +606,7 @@ class BookRepository {
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<Book>(
+    return session.db.count<Book>(
       where: where?.call(Book.t),
       limit: limit,
       transaction: transaction,
@@ -579,21 +629,73 @@ class BookAttachRepository {
       throw ArgumentError.notNull('book.id');
     }
 
-    var $espisode = espisode
-        .map((e) => _i2.EspisodeImplicit(
-              e,
-              $_bookEspisodesBookId: book.id,
-            ))
-        .toList();
-    await session.dbNext.update<_i2.Espisode>(
+    var $espisode = espisode.map((e) => e.copyWith(bookId: book.id)).toList();
+    await session.db.update<_i2.Espisode>(
       $espisode,
-      columns: [_i2.Espisode.t.$_bookEspisodesBookId],
+      columns: [_i2.Espisode.t.bookId],
+    );
+  }
+
+  Future<void> libraries(
+    _i1.Session session,
+    Book book,
+    List<_i2.Library> library,
+  ) async {
+    if (library.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('library.id');
+    }
+    if (book.id == null) {
+      throw ArgumentError.notNull('book.id');
+    }
+
+    var $library = library.map((e) => e.copyWith(bookId: book.id)).toList();
+    await session.db.update<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.bookId],
+    );
+  }
+
+  Future<void> comments(
+    _i1.Session session,
+    Book book,
+    List<_i2.Comment> comment,
+  ) async {
+    if (comment.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('comment.id');
+    }
+    if (book.id == null) {
+      throw ArgumentError.notNull('book.id');
+    }
+
+    var $comment = comment.map((e) => e.copyWith(bookId: book.id)).toList();
+    await session.db.update<_i2.Comment>(
+      $comment,
+      columns: [_i2.Comment.t.bookId],
     );
   }
 }
 
 class BookAttachRowRepository {
   const BookAttachRowRepository._();
+
+  Future<void> category(
+    _i1.Session session,
+    Book book,
+    _i2.Category category,
+  ) async {
+    if (book.id == null) {
+      throw ArgumentError.notNull('book.id');
+    }
+    if (category.id == null) {
+      throw ArgumentError.notNull('category.id');
+    }
+
+    var $book = book.copyWith(categoryId: category.id);
+    await session.db.updateRow<Book>(
+      $book,
+      columns: [Book.t.categoryId],
+    );
+  }
 
   Future<void> espisodes(
     _i1.Session session,
@@ -607,13 +709,48 @@ class BookAttachRowRepository {
       throw ArgumentError.notNull('book.id');
     }
 
-    var $espisode = _i2.EspisodeImplicit(
-      espisode,
-      $_bookEspisodesBookId: book.id,
-    );
-    await session.dbNext.updateRow<_i2.Espisode>(
+    var $espisode = espisode.copyWith(bookId: book.id);
+    await session.db.updateRow<_i2.Espisode>(
       $espisode,
-      columns: [_i2.Espisode.t.$_bookEspisodesBookId],
+      columns: [_i2.Espisode.t.bookId],
+    );
+  }
+
+  Future<void> libraries(
+    _i1.Session session,
+    Book book,
+    _i2.Library library,
+  ) async {
+    if (library.id == null) {
+      throw ArgumentError.notNull('library.id');
+    }
+    if (book.id == null) {
+      throw ArgumentError.notNull('book.id');
+    }
+
+    var $library = library.copyWith(bookId: book.id);
+    await session.db.updateRow<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.bookId],
+    );
+  }
+
+  Future<void> comments(
+    _i1.Session session,
+    Book book,
+    _i2.Comment comment,
+  ) async {
+    if (comment.id == null) {
+      throw ArgumentError.notNull('comment.id');
+    }
+    if (book.id == null) {
+      throw ArgumentError.notNull('book.id');
+    }
+
+    var $comment = comment.copyWith(bookId: book.id);
+    await session.db.updateRow<_i2.Comment>(
+      $comment,
+      columns: [_i2.Comment.t.bookId],
     );
   }
 }
@@ -629,15 +766,40 @@ class BookDetachRepository {
       throw ArgumentError.notNull('espisode.id');
     }
 
-    var $espisode = espisode
-        .map((e) => _i2.EspisodeImplicit(
-              e,
-              $_bookEspisodesBookId: null,
-            ))
-        .toList();
-    await session.dbNext.update<_i2.Espisode>(
+    var $espisode = espisode.map((e) => e.copyWith(bookId: null)).toList();
+    await session.db.update<_i2.Espisode>(
       $espisode,
-      columns: [_i2.Espisode.t.$_bookEspisodesBookId],
+      columns: [_i2.Espisode.t.bookId],
+    );
+  }
+
+  Future<void> libraries(
+    _i1.Session session,
+    List<_i2.Library> library,
+  ) async {
+    if (library.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('library.id');
+    }
+
+    var $library = library.map((e) => e.copyWith(bookId: null)).toList();
+    await session.db.update<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.bookId],
+    );
+  }
+
+  Future<void> comments(
+    _i1.Session session,
+    List<_i2.Comment> comment,
+  ) async {
+    if (comment.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('comment.id');
+    }
+
+    var $comment = comment.map((e) => e.copyWith(bookId: null)).toList();
+    await session.db.update<_i2.Comment>(
+      $comment,
+      columns: [_i2.Comment.t.bookId],
     );
   }
 }
@@ -653,13 +815,40 @@ class BookDetachRowRepository {
       throw ArgumentError.notNull('espisode.id');
     }
 
-    var $espisode = _i2.EspisodeImplicit(
-      espisode,
-      $_bookEspisodesBookId: null,
-    );
-    await session.dbNext.updateRow<_i2.Espisode>(
+    var $espisode = espisode.copyWith(bookId: null);
+    await session.db.updateRow<_i2.Espisode>(
       $espisode,
-      columns: [_i2.Espisode.t.$_bookEspisodesBookId],
+      columns: [_i2.Espisode.t.bookId],
+    );
+  }
+
+  Future<void> libraries(
+    _i1.Session session,
+    _i2.Library library,
+  ) async {
+    if (library.id == null) {
+      throw ArgumentError.notNull('library.id');
+    }
+
+    var $library = library.copyWith(bookId: null);
+    await session.db.updateRow<_i2.Library>(
+      $library,
+      columns: [_i2.Library.t.bookId],
+    );
+  }
+
+  Future<void> comments(
+    _i1.Session session,
+    _i2.Comment comment,
+  ) async {
+    if (comment.id == null) {
+      throw ArgumentError.notNull('comment.id');
+    }
+
+    var $comment = comment.copyWith(bookId: null);
+    await session.db.updateRow<_i2.Comment>(
+      $comment,
+      columns: [_i2.Comment.t.bookId],
     );
   }
 }

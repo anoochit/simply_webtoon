@@ -7,10 +7,10 @@
 # your yaml-files.
 
 # Name of the class to generate.
-class: Espisode
+class: Category
 
 # Add the table key, if this class represents a row in the database.
-table: espisode
+table: category
 
 # The fields (and columns if connected to the database) of the class. Supported types are
 # `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`,
@@ -19,7 +19,4 @@ table: espisode
 # Eg. `List<int>?` or `List<MyOtherClass?>`.
 fields:
   title: String
-  cover: String
-  image: String
-  book: Book?, relation(name=book_espisodes)
-  libraries: List<Library>?, relation(name=espisode_libraries)
+  books: List<Book>?, relation(name=category_book)
