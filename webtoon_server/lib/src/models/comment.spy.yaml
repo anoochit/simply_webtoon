@@ -19,10 +19,11 @@ table: comment
 # Eg. `List<int>?` or `List<MyOtherClass?>`.
 fields:
   comment: String
+  timestamp: DateTime
   book: Book?, relation(name=book_comments)
   parent: Comment?, relation(name=comment_replies, optional, onDelete=SetNull)
   replies: List<Comment>?, relation(name=comment_replies)
-  userInfo: module:auth:UserInfo?, relation 
+  userInfo: module:auth:UserInfo?, relation
 
 indexes:
   user_comment_idx:

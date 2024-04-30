@@ -5,24 +5,31 @@ import 'package:get/get.dart';
 import 'package:webtoon_flutter/app/modules/home/controllers/home_controller.dart';
 
 class CategoryMenuView extends GetView<HomeController> {
-  const CategoryMenuView({Key? key}) : super(key: key);
+  const CategoryMenuView({super.key});
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: CarouselSlider(
+    return Obx(
+      () => CarouselSlider(
         carouselController: controller.menuCarouselController,
+        // TODO : use data from database
         items: List.generate(
           6,
           (index) => Container(
             width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.symmetric(horizontal: 4.0),
+            padding: const EdgeInsets.symmetric(horizontal: 2.0),
             child: FilledButton.tonal(
+              style: const ButtonStyle().copyWith(
+                backgroundColor: (controller.menuIndex.value == index)
+                    ? MaterialStatePropertyAll(
+                        Theme.of(context).colorScheme.inversePrimary,
+                      )
+                    : null,
+              ),
               onPressed: () {
                 // show category index
                 controller.menuCarouselController.animateToPage(index);
               },
-              child: Text('Menu ${index}'),
+              child: Text('Menu $index'),
             ),
           ),
         ),

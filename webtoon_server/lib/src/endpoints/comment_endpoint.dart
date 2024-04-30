@@ -8,7 +8,7 @@ import 'package:webtoon_server/src/generated/protocol.dart';
 
 // After adding or modifying an endpoint, you will need to run
 // `serverpod generate` to update the server and client code.
-class CategoryEndpoint extends Endpoint {
+class CommentEndpoint extends Endpoint {
   // You create methods in your endpoint which are accessible from the client by
   // creating a public method with `Session` as its first parameter.
   // `bool`, `int`, `double`, `String`, `UuidValue`, `Duration`, `DateTime`, `ByteData`,
@@ -20,21 +20,16 @@ class CategoryEndpoint extends Endpoint {
     return 'Hello $name';
   }
 
-  // get categories with books
-  // get categories with nestest books
-  Future<List<Category>> getCategories(Session session) async {
-    final categories = Category.db.find(
-      session,
-      include: Category.include(
-        books: Book.includeList(
-          include: Book.include(
-            espisodes: Espisode.includeList(),
-            comments: Comment.includeList(),
-          ),
-        ),
-      ),
-    );
+  Future<List<Comment>> getComments(Session session) async {
+    final result = await Comment.db.find(session, include: Comment.include());
+    return result;
+  }
 
-    return categories;
+  Future<Comment> createComment(Session session, Comment comment) async {
+    final result = await Comment.db.insertRow(
+      session,
+      comment,
+    );
+    return result;
   }
 }

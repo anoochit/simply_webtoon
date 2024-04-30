@@ -16,6 +16,7 @@ abstract class Comment extends _i1.SerializableEntity {
   Comment._({
     this.id,
     required this.comment,
+    required this.timestamp,
     required this.bookId,
     this.book,
     this.parentId,
@@ -28,6 +29,7 @@ abstract class Comment extends _i1.SerializableEntity {
   factory Comment({
     int? id,
     required String comment,
+    required DateTime timestamp,
     required int bookId,
     _i2.Book? book,
     int? parentId,
@@ -45,6 +47,8 @@ abstract class Comment extends _i1.SerializableEntity {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       comment: serializationManager
           .deserialize<String>(jsonSerialization['comment']),
+      timestamp: serializationManager
+          .deserialize<DateTime>(jsonSerialization['timestamp']),
       bookId:
           serializationManager.deserialize<int>(jsonSerialization['bookId']),
       book: serializationManager
@@ -69,6 +73,8 @@ abstract class Comment extends _i1.SerializableEntity {
 
   String comment;
 
+  DateTime timestamp;
+
   int bookId;
 
   _i2.Book? book;
@@ -86,6 +92,7 @@ abstract class Comment extends _i1.SerializableEntity {
   Comment copyWith({
     int? id,
     String? comment,
+    DateTime? timestamp,
     int? bookId,
     _i2.Book? book,
     int? parentId,
@@ -99,6 +106,7 @@ abstract class Comment extends _i1.SerializableEntity {
     return {
       if (id != null) 'id': id,
       'comment': comment,
+      'timestamp': timestamp.toJson(),
       'bookId': bookId,
       if (book != null) 'book': book?.toJson(),
       if (parentId != null) 'parentId': parentId,
@@ -117,6 +125,7 @@ class _CommentImpl extends Comment {
   _CommentImpl({
     int? id,
     required String comment,
+    required DateTime timestamp,
     required int bookId,
     _i2.Book? book,
     int? parentId,
@@ -127,6 +136,7 @@ class _CommentImpl extends Comment {
   }) : super._(
           id: id,
           comment: comment,
+          timestamp: timestamp,
           bookId: bookId,
           book: book,
           parentId: parentId,
@@ -140,6 +150,7 @@ class _CommentImpl extends Comment {
   Comment copyWith({
     Object? id = _Undefined,
     String? comment,
+    DateTime? timestamp,
     int? bookId,
     Object? book = _Undefined,
     Object? parentId = _Undefined,
@@ -151,6 +162,7 @@ class _CommentImpl extends Comment {
     return Comment(
       id: id is int? ? id : this.id,
       comment: comment ?? this.comment,
+      timestamp: timestamp ?? this.timestamp,
       bookId: bookId ?? this.bookId,
       book: book is _i2.Book? ? book : this.book?.copyWith(),
       parentId: parentId is int? ? parentId : this.parentId,

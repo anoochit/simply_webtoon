@@ -19,7 +19,9 @@ import 'espisode.dart' as _i7;
 import 'example.dart' as _i8;
 import 'library.dart' as _i9;
 import 'protocol.dart' as _i10;
-import 'package:webtoon_server/src/generated/category.dart' as _i11;
+import 'package:webtoon_server/src/generated/book.dart' as _i11;
+import 'package:webtoon_server/src/generated/category.dart' as _i12;
+import 'package:webtoon_server/src/generated/comment.dart' as _i13;
 export 'book.dart';
 export 'category.dart';
 export 'comment.dart';
@@ -160,6 +162,12 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'timestamp',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
         ),
         _i2.ColumnDefinition(
           name: 'bookId',
@@ -490,8 +498,16 @@ class Protocol extends _i1.SerializationManagerServer {
           ? (data as List).map((e) => deserialize<_i10.Library>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i11.Category>) {
-      return (data as List).map((e) => deserialize<_i11.Category>(e)).toList()
+    if (t == List<_i11.Book>) {
+      return (data as List).map((e) => deserialize<_i11.Book>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i12.Category>) {
+      return (data as List).map((e) => deserialize<_i12.Category>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i13.Comment>) {
+      return (data as List).map((e) => deserialize<_i13.Comment>(e)).toList()
           as dynamic;
     }
     try {

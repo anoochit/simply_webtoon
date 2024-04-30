@@ -26,4 +26,3 @@ indexes:
   user_library_unique_idx:
     fields: userInfoId, bookId, espisodeId
     unique: true
-  

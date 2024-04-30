@@ -10,7 +10,7 @@ import 'package:webtoon_flutter/app/modules/home/views/schedule_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = Get.statusBarHeight;
@@ -18,10 +18,10 @@ class HomeView extends GetView<HomeController> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Obx(
           () => AnimatedContainer(
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             height: controller.appBarVisible.value
                 ? statusBarHeight
                 : onlyStatusBarHeight,
@@ -37,7 +37,7 @@ class HomeView extends GetView<HomeController> {
       body: Obx(
         () => IndexedStack(
           index: controller.navIndex.value,
-          children: [
+          children: const [
             FeedView(),
             ScheduleView(),
             GiftboxView(),
@@ -45,7 +45,7 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBarView(),
+      bottomNavigationBar: const NavigationBarView(),
     );
   }
 }

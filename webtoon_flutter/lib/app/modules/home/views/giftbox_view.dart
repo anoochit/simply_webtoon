@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GiftboxView extends GetView {
-  const GiftboxView({Key? key}) : super(key: key);
+  const GiftboxView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'GiftboxView is working',
         style: TextStyle(fontSize: 20),

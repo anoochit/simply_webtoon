@@ -7,26 +7,20 @@ import 'package:webtoon_flutter/app/modules/home/views/category_menu_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/category_page_view.dart';
 
 class FeedView extends GetView<HomeController> {
-  const FeedView({Key? key}) : super(key: key);
+  const FeedView({super.key});
   @override
   Widget build(BuildContext context) {
-    final buttonHeight = 48.0;
+    const buttonHeight = 48.0;
     return Stack(
       children: [
-        // category menu
+        // TODO : use data from database
         Container(
-          height: buttonHeight,
-          child: CategoryMenuView(),
-        ),
-
-        // book in each category
-        Container(
-          margin: EdgeInsets.only(top: buttonHeight),
+          padding: const EdgeInsets.only(top: buttonHeight),
           child: CarouselSlider(
             carouselController: controller.pageCarouselController,
             items: List.generate(
               6,
-              (index) => CategoryPageView(),
+              (index) => const CategoryPageView(),
             ),
             options: CarouselOptions(
               height: MediaQuery.of(context).size.height,
@@ -37,6 +31,12 @@ class FeedView extends GetView<HomeController> {
               },
             ),
           ),
+        ),
+
+        // category menu
+        const SizedBox(
+          height: buttonHeight,
+          child: CategoryMenuView(),
         ),
       ],
     );

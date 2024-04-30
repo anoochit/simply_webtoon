@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:webtoon_flutter/app/modules/home/controllers/home_controller.dart';
 
 class NavigationBarView extends GetView<HomeController> {
-  const NavigationBarView({Key? key}) : super(key: key);
+  const NavigationBarView({super.key});
   @override
   Widget build(BuildContext context) {
     return Obx(

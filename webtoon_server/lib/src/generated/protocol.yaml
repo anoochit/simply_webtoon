@@ -1,7 +1,15 @@
 book:
   - hello:
+  - getBooks:
+  - getBooksFromCategory:
 category:
   - hello:
   - getCategories:
+comment:
+  - hello:
+  - getComments:
+  - createComment:
 example:
   - hello:
+library:
+  - getUserLibrary:

@@ -19,4 +19,4 @@ table: category
 # Eg. `List<int>?` or `List<MyOtherClass?>`.
 fields:
   title: String
-  books: List<Book>?, relation(name=category_book)
+  books: List<Book>?, relation(name=category_books)

@@ -17,8 +17,10 @@ import 'espisode.dart' as _i5;
 import 'example.dart' as _i6;
 import 'library.dart' as _i7;
 import 'protocol.dart' as _i8;
-import 'package:webtoon_client/src/protocol/category.dart' as _i9;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i10;
+import 'package:webtoon_client/src/protocol/book.dart' as _i9;
+import 'package:webtoon_client/src/protocol/category.dart' as _i10;
+import 'package:webtoon_client/src/protocol/comment.dart' as _i11;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i12;
 export 'book.dart';
 export 'category.dart';
 export 'comment.dart';
@@ -111,12 +113,20 @@ class Protocol extends _i1.SerializationManager {
           ? (data as List).map((e) => deserialize<_i8.Library>(e)).toList()
           : null) as dynamic;
     }
-    if (t == List<_i9.Category>) {
-      return (data as List).map((e) => deserialize<_i9.Category>(e)).toList()
+    if (t == List<_i9.Book>) {
+      return (data as List).map((e) => deserialize<_i9.Book>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i10.Category>) {
+      return (data as List).map((e) => deserialize<_i10.Category>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i11.Comment>) {
+      return (data as List).map((e) => deserialize<_i11.Comment>(e)).toList()
           as dynamic;
     }
     try {
-      return _i10.Protocol().deserialize<T>(data, t);
+      return _i12.Protocol().deserialize<T>(data, t);
     } catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -124,7 +134,7 @@ class Protocol extends _i1.SerializationManager {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i10.Protocol().getClassNameForObject(data);
+    className = _i12.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -153,7 +163,7 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i10.Protocol().deserializeByClassName(data);
+      return _i12.Protocol().deserializeByClassName(data);
     }
     if (data['className'] == 'Book') {
       return deserialize<_i2.Book>(data['data']);

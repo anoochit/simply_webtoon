@@ -1,4 +1,5 @@
 import 'package:serverpod/serverpod.dart';
+import 'package:webtoon_server/src/generated/protocol.dart';
 
 // This is an example endpoint of your server. It's best practice to use the
 // `Endpoint` ending of the class name, but it will be removed when accessing
@@ -19,5 +20,29 @@ class BookEndpoint extends Endpoint {
     return 'Hello $name';
   }
 
-  
+  Future<List<Book>> getBooks(Session session) async {
+    final books = await Book.db.find(
+      session,
+      include: Book.include(
+        category: Category.include(),
+        espisodes: Espisode.includeList(),
+        comments: Comment.includeList(),
+      ),
+    );
+    return books;
+  }
+
+  Future<List<Book>> getBooksFromCategory(
+      Session session, int categoryId) async {
+    final books = await Book.db.find(
+      session,
+      where: (book) => book.categoryId.equals(categoryId),
+      include: Book.include(
+        espisodes: Espisode.includeList(),
+        comments: Comment.includeList(),
+      ),
+    );
+
+    return books;
+  }
 }

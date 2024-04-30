@@ -22,6 +22,6 @@ fields:
   description: String
   cover: String
   espisodes: List<Espisode>?, relation(name=book_espisodes)
-  category: Category?, relation(name=category_book)
+  category: Category?, relation(name=category_books)
   libraries: List<Library>?, relation(name=book_libraries)
   comments: List<Comment>?, relation(name=book_comments)
