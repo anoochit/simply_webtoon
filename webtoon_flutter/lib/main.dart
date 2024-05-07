@@ -15,6 +15,15 @@ Future<void> main() async {
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        useMaterial3: true,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: true,
+      ),
     ),
   );
 }
