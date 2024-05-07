@@ -66,6 +66,18 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ColumnDefinition(
           name: 'cover',
+          columnType: _i2.ColumnType.json,
+          isNullable: false,
+          dartType: 'List<String>',
+        ),
+        _i2.ColumnDefinition(
+          name: 'color',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'publisher',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
@@ -271,15 +283,15 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ColumnDefinition(
           name: 'cover',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.json,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'List<String>',
         ),
         _i2.ColumnDefinition(
           name: 'image',
-          columnType: _i2.ColumnType.text,
+          columnType: _i2.ColumnType.json,
           isNullable: false,
-          dartType: 'String',
+          dartType: 'List<String>',
         ),
         _i2.ColumnDefinition(
           name: 'bookId',
@@ -467,6 +479,10 @@ class Protocol extends _i1.SerializationManagerServer {
     }
     if (t == _i1.getType<_i9.Library?>()) {
       return (data != null ? _i9.Library.fromJson(data, this) : null) as T;
+    }
+    if (t == List<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toList()
+          as dynamic;
     }
     if (t == _i1.getType<List<_i10.Espisode>?>()) {
       return (data != null

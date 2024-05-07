@@ -106,6 +106,12 @@ class EndpointExample extends _i1.EndpointRef {
         'hello',
         {'name': name},
       );
+
+  _i2.Future<bool> addSampleData() => caller.callServerEndpoint<bool>(
+        'example',
+        'addSampleData',
+        {},
+      );
 }
 
 /// {@category Endpoint}

@@ -18,6 +18,8 @@ abstract class Book extends _i1.TableRow {
     required this.title,
     required this.description,
     required this.cover,
+    required this.color,
+    required this.publisher,
     this.espisodes,
     required this.categoryId,
     this.category,
@@ -29,7 +31,9 @@ abstract class Book extends _i1.TableRow {
     int? id,
     required String title,
     required String description,
-    required String cover,
+    required List<String> cover,
+    required String color,
+    required String publisher,
     List<_i2.Espisode>? espisodes,
     required int categoryId,
     _i2.Category? category,
@@ -47,8 +51,12 @@ abstract class Book extends _i1.TableRow {
           serializationManager.deserialize<String>(jsonSerialization['title']),
       description: serializationManager
           .deserialize<String>(jsonSerialization['description']),
-      cover:
-          serializationManager.deserialize<String>(jsonSerialization['cover']),
+      cover: serializationManager
+          .deserialize<List<String>>(jsonSerialization['cover']),
+      color:
+          serializationManager.deserialize<String>(jsonSerialization['color']),
+      publisher: serializationManager
+          .deserialize<String>(jsonSerialization['publisher']),
       espisodes: serializationManager
           .deserialize<List<_i2.Espisode>?>(jsonSerialization['espisodes']),
       categoryId: serializationManager
@@ -70,7 +78,11 @@ abstract class Book extends _i1.TableRow {
 
   String description;
 
-  String cover;
+  List<String> cover;
+
+  String color;
+
+  String publisher;
 
   List<_i2.Espisode>? espisodes;
 
@@ -89,7 +101,9 @@ abstract class Book extends _i1.TableRow {
     int? id,
     String? title,
     String? description,
-    String? cover,
+    List<String>? cover,
+    String? color,
+    String? publisher,
     List<_i2.Espisode>? espisodes,
     int? categoryId,
     _i2.Category? category,
@@ -102,7 +116,9 @@ abstract class Book extends _i1.TableRow {
       if (id != null) 'id': id,
       'title': title,
       'description': description,
-      'cover': cover,
+      'cover': cover.toJson(),
+      'color': color,
+      'publisher': publisher,
       if (espisodes != null)
         'espisodes': espisodes?.toJson(valueToJson: (v) => v.toJson()),
       'categoryId': categoryId,
@@ -120,7 +136,9 @@ abstract class Book extends _i1.TableRow {
       if (id != null) 'id': id,
       'title': title,
       'description': description,
-      'cover': cover,
+      'cover': cover.toJson(),
+      'color': color,
+      'publisher': publisher,
       if (espisodes != null)
         'espisodes': espisodes?.toJson(valueToJson: (v) => v.allToJson()),
       'categoryId': categoryId,
@@ -174,7 +192,9 @@ class _BookImpl extends Book {
     int? id,
     required String title,
     required String description,
-    required String cover,
+    required List<String> cover,
+    required String color,
+    required String publisher,
     List<_i2.Espisode>? espisodes,
     required int categoryId,
     _i2.Category? category,
@@ -185,6 +205,8 @@ class _BookImpl extends Book {
           title: title,
           description: description,
           cover: cover,
+          color: color,
+          publisher: publisher,
           espisodes: espisodes,
           categoryId: categoryId,
           category: category,
@@ -197,7 +219,9 @@ class _BookImpl extends Book {
     Object? id = _Undefined,
     String? title,
     String? description,
-    String? cover,
+    List<String>? cover,
+    String? color,
+    String? publisher,
     Object? espisodes = _Undefined,
     int? categoryId,
     Object? category = _Undefined,
@@ -208,7 +232,9 @@ class _BookImpl extends Book {
       id: id is int? ? id : this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      cover: cover ?? this.cover,
+      cover: cover ?? this.cover.clone(),
+      color: color ?? this.color,
+      publisher: publisher ?? this.publisher,
       espisodes: espisodes is List<_i2.Espisode>?
           ? espisodes
           : this.espisodes?.clone(),
@@ -233,8 +259,16 @@ class BookTable extends _i1.Table {
       'description',
       this,
     );
-    cover = _i1.ColumnString(
+    cover = _i1.ColumnSerializable(
       'cover',
+      this,
+    );
+    color = _i1.ColumnString(
+      'color',
+      this,
+    );
+    publisher = _i1.ColumnString(
+      'publisher',
       this,
     );
     categoryId = _i1.ColumnInt(
@@ -247,7 +281,11 @@ class BookTable extends _i1.Table {
 
   late final _i1.ColumnString description;
 
-  late final _i1.ColumnString cover;
+  late final _i1.ColumnSerializable cover;
+
+  late final _i1.ColumnString color;
+
+  late final _i1.ColumnString publisher;
 
   _i2.EspisodeTable? ___espisodes;
 
@@ -377,6 +415,8 @@ class BookTable extends _i1.Table {
         title,
         description,
         cover,
+        color,
+        publisher,
         categoryId,
       ];
 

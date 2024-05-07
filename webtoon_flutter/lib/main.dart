@@ -5,10 +5,10 @@ import 'package:webtoon_flutter/app/serverpod.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  initServerPodClient();
+  await initServerPodClient();
 
   runApp(
     GetMaterialApp(

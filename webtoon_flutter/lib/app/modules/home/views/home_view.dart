@@ -6,6 +6,7 @@ import 'package:webtoon_flutter/app/modules/home/views/giftbox_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/library_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/navigation_bar_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/schedule_view.dart';
+import 'package:webtoon_flutter/app/serverpod.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -15,6 +16,18 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final statusBarHeight = Get.statusBarHeight;
     final onlyStatusBarHeight = MediaQuery.of(context).padding.top;
+
+    // return Scaffold(
+    //   body: Center(
+    //     child: ElevatedButton(
+    //       onPressed: () async {
+    //         // add sample data
+    //         await client.example.addSampleData();
+    //       },
+    //       child: Text('Add Sample Data'),
+    //     ),
+    //   ),
+    // );
 
     return Scaffold(
       appBar: PreferredSize(

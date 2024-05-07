@@ -13,25 +13,8 @@ class CategoryMenuView extends GetView<HomeController> {
         carouselController: controller.menuCarouselController,
         // TODO : use data from database
         items: List.generate(
-          6,
-          (index) => Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(horizontal: 2.0),
-            child: FilledButton.tonal(
-              style: const ButtonStyle().copyWith(
-                backgroundColor: (controller.menuIndex.value == index)
-                    ? MaterialStatePropertyAll(
-                        Theme.of(context).colorScheme.inversePrimary,
-                      )
-                    : null,
-              ),
-              onPressed: () {
-                // show category index
-                controller.menuCarouselController.animateToPage(index);
-              },
-              child: Text('Menu $index'),
-            ),
-          ),
+          controller.listCategory.length,
+          (index) => buildmenuItem(context, index),
         ),
         options: CarouselOptions(
           height: 64.0,
@@ -42,6 +25,29 @@ class CategoryMenuView extends GetView<HomeController> {
             controller.pageCarouselController.animateToPage(index);
           },
         ),
+      ),
+    );
+  }
+
+  Container buildmenuItem(BuildContext context, int index) {
+    final menuTitle = controller.listCategory[index].title;
+
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+      child: FilledButton.tonal(
+        style: const ButtonStyle().copyWith(
+          backgroundColor: (controller.menuIndex.value == index)
+              ? MaterialStatePropertyAll(
+                  Theme.of(context).colorScheme.inversePrimary,
+                )
+              : null,
+        ),
+        onPressed: () {
+          // show category index
+          controller.menuCarouselController.animateToPage(index);
+        },
+        child: Text(menuTitle),
       ),
     );
   }

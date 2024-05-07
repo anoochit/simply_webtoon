@@ -25,8 +25,8 @@ abstract class Espisode extends _i1.SerializableEntity {
   factory Espisode({
     int? id,
     required String title,
-    required String cover,
-    required String image,
+    required List<String> cover,
+    required List<String> image,
     required int bookId,
     _i2.Book? book,
     List<_i2.Library>? libraries,
@@ -40,10 +40,10 @@ abstract class Espisode extends _i1.SerializableEntity {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       title:
           serializationManager.deserialize<String>(jsonSerialization['title']),
-      cover:
-          serializationManager.deserialize<String>(jsonSerialization['cover']),
-      image:
-          serializationManager.deserialize<String>(jsonSerialization['image']),
+      cover: serializationManager
+          .deserialize<List<String>>(jsonSerialization['cover']),
+      image: serializationManager
+          .deserialize<List<String>>(jsonSerialization['image']),
       bookId:
           serializationManager.deserialize<int>(jsonSerialization['bookId']),
       book: serializationManager
@@ -60,9 +60,9 @@ abstract class Espisode extends _i1.SerializableEntity {
 
   String title;
 
-  String cover;
+  List<String> cover;
 
-  String image;
+  List<String> image;
 
   int bookId;
 
@@ -73,8 +73,8 @@ abstract class Espisode extends _i1.SerializableEntity {
   Espisode copyWith({
     int? id,
     String? title,
-    String? cover,
-    String? image,
+    List<String>? cover,
+    List<String>? image,
     int? bookId,
     _i2.Book? book,
     List<_i2.Library>? libraries,
@@ -84,8 +84,8 @@ abstract class Espisode extends _i1.SerializableEntity {
     return {
       if (id != null) 'id': id,
       'title': title,
-      'cover': cover,
-      'image': image,
+      'cover': cover.toJson(),
+      'image': image.toJson(),
       'bookId': bookId,
       if (book != null) 'book': book?.toJson(),
       if (libraries != null)
@@ -100,8 +100,8 @@ class _EspisodeImpl extends Espisode {
   _EspisodeImpl({
     int? id,
     required String title,
-    required String cover,
-    required String image,
+    required List<String> cover,
+    required List<String> image,
     required int bookId,
     _i2.Book? book,
     List<_i2.Library>? libraries,
@@ -119,8 +119,8 @@ class _EspisodeImpl extends Espisode {
   Espisode copyWith({
     Object? id = _Undefined,
     String? title,
-    String? cover,
-    String? image,
+    List<String>? cover,
+    List<String>? image,
     int? bookId,
     Object? book = _Undefined,
     Object? libraries = _Undefined,
@@ -128,8 +128,8 @@ class _EspisodeImpl extends Espisode {
     return Espisode(
       id: id is int? ? id : this.id,
       title: title ?? this.title,
-      cover: cover ?? this.cover,
-      image: image ?? this.image,
+      cover: cover ?? this.cover.clone(),
+      image: image ?? this.image.clone(),
       bookId: bookId ?? this.bookId,
       book: book is _i2.Book? ? book : this.book?.copyWith(),
       libraries:

@@ -1,4 +1,5 @@
 import 'package:serverpod/serverpod.dart';
+import 'package:webtoon_server/src/generated/protocol.dart';
 
 // This is an example endpoint of your server. It's best practice to use the
 // `Endpoint` ending of the class name, but it will be removed when accessing
@@ -17,5 +18,73 @@ class ExampleEndpoint extends Endpoint {
   // passwords, and information about the request being made to the server.
   Future<String> hello(Session session, String name) async {
     return 'Hello $name';
+  }
+
+  Future<bool> addSampleData(Session session) async {
+    String sampleBackground = "books/sample_background.webp";
+    String sampleCover = "books/sample_cover.webp";
+    String sampleItem = "books/sample_item.webp";
+    String sampleLabel = "books/sample_label.webp";
+
+    // add data
+    for (int i = 0; i < 6; i++) {
+      // add category
+      await Category.db
+          .insertRow(
+        session,
+        Category(
+          title: 'Category${i + 1}',
+        ),
+      )
+          .then((category) async {
+        final catId = category.id;
+        for (int b = 0; b < 20; b++) {
+          // add book
+          await Book.db
+              .insertRow(
+            session,
+            Book(
+              title: 'Book${b + 1}',
+              description: 'description',
+              publisher: 'publisher name',
+              color: '0xFF1F1051',
+              cover: [
+                sampleBackground,
+                sampleCover,
+                sampleItem,
+                sampleLabel,
+              ],
+              categoryId: catId!,
+            ),
+          )
+              .then((book) async {
+            // add espidode
+            for (int e = 0; e < 20; e++) {
+              await Espisode.db.insertRow(
+                session,
+                Espisode(
+                  title: 'EP${e + 1}',
+                  cover: [
+                    sampleBackground,
+                    sampleCover,
+                    sampleLabel,
+                  ],
+                  image: [
+                    sampleBackground,
+                    sampleBackground,
+                    sampleBackground,
+                    sampleBackground,
+                    sampleBackground,
+                  ],
+                  bookId: book.id!,
+                ),
+              );
+            }
+          });
+        }
+      });
+    }
+
+    return true;
   }
 }

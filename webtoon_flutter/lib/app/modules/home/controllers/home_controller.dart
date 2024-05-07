@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:webtoon_client/webtoon_client.dart';
+import 'package:webtoon_flutter/app/data/services/webtoon_services.dart';
 
 class HomeController extends GetxController {
   RxInt navIndex = 0.obs;
@@ -27,6 +29,8 @@ class HomeController extends GetxController {
     Icons.inbox,
   ];
 
+  RxList<Category> listCategory = <Category>[].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -40,5 +44,13 @@ class HomeController extends GetxController {
         appBarVisible.value = false;
       }
     });
+
+    // load category
+    loadCategory();
+  }
+
+  Future<void> loadCategory() async {
+    final result = await WebtoonService().getCategories();
+    listCategory.value = result;
   }
 }

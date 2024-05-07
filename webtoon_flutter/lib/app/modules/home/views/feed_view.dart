@@ -14,21 +14,24 @@ class FeedView extends GetView<HomeController> {
     return Stack(
       children: [
         // TODO : use data from database
-        Container(
-          padding: const EdgeInsets.only(top: buttonHeight),
-          child: CarouselSlider(
-            carouselController: controller.pageCarouselController,
-            items: List.generate(
-              6,
-              (index) => const CategoryPageView(),
-            ),
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height,
-              viewportFraction: 1.0,
-              onPageChanged: (index, reason) {
-                controller.menuIndex.value = index;
-                controller.menuCarouselController.animateToPage(index);
-              },
+        Obx(
+          () => Container(
+            padding: const EdgeInsets.only(top: buttonHeight),
+            child: CarouselSlider(
+              carouselController: controller.pageCarouselController,
+              items: List.generate(
+                controller.listCategory.length,
+                (index) =>
+                    CategoryPageView(category: controller.listCategory[index]),
+              ),
+              options: CarouselOptions(
+                height: MediaQuery.of(context).size.height,
+                viewportFraction: 1.0,
+                onPageChanged: (index, reason) {
+                  controller.menuIndex.value = index;
+                  controller.menuCarouselController.animateToPage(index);
+                },
+              ),
             ),
           ),
         ),

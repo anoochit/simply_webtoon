@@ -20,7 +20,9 @@ table: book
 fields:
   title: String
   description: String
-  cover: String
+  cover: List<String>
+  color: String
+  publisher: String
   espisodes: List<Espisode>?, relation(name=book_espisodes)
   category: Category?, relation(name=category_books)
   libraries: List<Library>?, relation(name=book_libraries)

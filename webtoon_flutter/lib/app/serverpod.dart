@@ -7,7 +7,7 @@ late Client client;
 
 // initial serverpod client
 initServerPodClient() async {
-  var client = Client(
+  client = Client(
     'http://10.0.2.2:8080/',
     authenticationKeyManager: FlutterAuthenticationKeyManager(),
   )..connectivityMonitor = FlutterConnectivityMonitor();

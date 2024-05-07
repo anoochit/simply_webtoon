@@ -19,7 +19,7 @@ table: espisode
 # Eg. `List<int>?` or `List<MyOtherClass?>`.
 fields: 
   title: String
-  cover: String
-  image: String
+  cover: List<String>
+  image: List<String>
   book: Book?, relation(name=book_espisodes)
   libraries: List<Library>?, relation(name=espisode_libraries)

@@ -210,7 +210,17 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['name'],
           ),
-        )
+        ),
+        'addSampleData': _i1.MethodConnector(
+          name: 'addSampleData',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['example'] as _i5.ExampleEndpoint)
+                  .addSampleData(session),
+        ),
       },
     );
     connectors['library'] = _i1.EndpointConnector(
