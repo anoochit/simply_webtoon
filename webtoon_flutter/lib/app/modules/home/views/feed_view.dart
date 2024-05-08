@@ -10,37 +10,30 @@ class FeedView extends GetView<HomeController> {
   const FeedView({super.key});
   @override
   Widget build(BuildContext context) {
-    const buttonHeight = 48.0;
     return Stack(
       children: [
         // TODO : use data from database
         Obx(
-          () => Container(
-            padding: const EdgeInsets.only(top: buttonHeight),
-            child: CarouselSlider(
-              carouselController: controller.pageCarouselController,
-              items: List.generate(
-                controller.listCategory.length,
-                (index) =>
-                    CategoryPageView(category: controller.listCategory[index]),
-              ),
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height,
-                viewportFraction: 1.0,
-                onPageChanged: (index, reason) {
-                  controller.menuIndex.value = index;
-                  controller.menuCarouselController.animateToPage(index);
-                },
-              ),
+          () => CarouselSlider(
+            carouselController: controller.pageCarouselController,
+            items: List.generate(
+              controller.listCategory.length,
+              (index) =>
+                  CategoryPageView(category: controller.listCategory[index]),
+            ),
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height,
+              viewportFraction: 1.0,
+              onPageChanged: (index, reason) {
+                controller.menuIndex.value = index;
+                controller.menuCarouselController.animateToPage(index);
+              },
             ),
           ),
         ),
 
         // category menu
-        const SizedBox(
-          height: buttonHeight,
-          child: CategoryMenuView(),
-        ),
+        const CategoryMenuView(),
       ],
     );
   }

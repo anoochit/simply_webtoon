@@ -17,7 +17,7 @@ class CategoryMenuView extends GetView<HomeController> {
           (index) => buildmenuItem(context, index),
         ),
         options: CarouselOptions(
-          height: 64.0,
+          height: 48.0,
           viewportFraction: 0.3,
           onPageChanged: (index, reason) {
             // update menu index

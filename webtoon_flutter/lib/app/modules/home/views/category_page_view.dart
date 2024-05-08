@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 import 'package:webtoon_client/src/protocol/category.dart';
@@ -14,7 +15,7 @@ class CategoryPageView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final books = category.books;
 
-    if (books!.length > 0) {
+    if (books!.isNotEmpty) {
       final backgroundImage = books.first.cover[0];
       final foregroundImage = books.first.cover[1];
       final titleImage = books.first.cover[3];
@@ -24,6 +25,7 @@ class CategoryPageView extends GetView<HomeController> {
       return ListView(
         controller: controller.scrollController,
         children: [
+          const Gap(56.0),
           // cover
           BookCoverItemView(
             backgroundImage: backgroundImage,
@@ -36,14 +38,16 @@ class CategoryPageView extends GetView<HomeController> {
             },
           ),
 
-          // grid list books
+          // TODO : grid list books
           GridView.builder(
             shrinkWrap: true,
             itemCount: 10,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            physics: const ScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+            ),
             itemBuilder: (context, index) {
-              return Card();
+              return const Card();
             },
           )
         ],

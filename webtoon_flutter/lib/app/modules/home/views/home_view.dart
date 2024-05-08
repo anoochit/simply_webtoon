@@ -6,7 +6,6 @@ import 'package:webtoon_flutter/app/modules/home/views/giftbox_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/library_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/navigation_bar_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/schedule_view.dart';
-import 'package:webtoon_flutter/app/serverpod.dart';
 
 import '../controllers/home_controller.dart';
 

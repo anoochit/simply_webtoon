@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +7,13 @@ import 'package:webtoon_flutter/app/data/services/minio_service.dart';
 
 class BookCoverItemView extends GetView {
   const BookCoverItemView(
-      {Key? key,
+      {super.key,
       required this.backgroundImage,
       required this.foregroundImage,
       required this.titleImage,
       required this.color,
       required this.publisher,
-      required this.onTap})
-      : super(key: key);
+      required this.onTap});
 
   final String backgroundImage;
   final String foregroundImage;
@@ -27,7 +25,7 @@ class BookCoverItemView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(4.0),
       child: GestureDetector(
         onTap: () => onTap(),
         child: LayoutBuilder(
@@ -40,7 +38,7 @@ class BookCoverItemView extends GetView {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       return Container(
-                        margin: EdgeInsets.only(top: 18.0),
+                        margin: const EdgeInsets.only(top: 18.0),
                         width: constraints.maxWidth,
                         height: constraints.maxWidth,
                         decoration: BoxDecoration(
@@ -57,7 +55,7 @@ class BookCoverItemView extends GetView {
                     }
 
                     return Container(
-                      margin: EdgeInsets.only(top: 18.0),
+                      margin: const EdgeInsets.only(top: 18.0),
                       width: constraints.maxWidth,
                       height: constraints.maxWidth,
                     );
