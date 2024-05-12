@@ -1,3 +1,11 @@
-# Webtoon
+# Simply Webtoon
 
-A sample webtool app with Dart fullstack using [Serverpod](https://serverpod.dev)
+A sample webtoon app using Dart fullstack with [Serverpod](https://serverpod.io).
+
+## Screenshots
+
+![](/screenshots/screenshot01.png)
+
+![](/screenshots/screenshot02.png)
+
+![](/screenshots/screenshot03.png)
