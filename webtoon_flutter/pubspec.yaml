@@ -17,6 +17,7 @@ dependencies:
   minio:
     git:
       url: https://github.com/anoochit/minio-dart.git
+  parallax_animation: ^0.0.3
   serverpod_auth_email_flutter: 2.0.0-alpha.2
   serverpod_auth_shared_flutter: 2.0.0-alpha.2
   serverpod_flutter: 2.0.0-alpha.2

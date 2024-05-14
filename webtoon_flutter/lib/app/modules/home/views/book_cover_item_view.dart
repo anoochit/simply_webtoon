@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,7 @@ class BookCoverItemView extends GetView {
   final String backgroundImage;
   final String foregroundImage;
   final String titleImage;
-  final String color;
+  final Color color;
   final String publisher;
   final VoidCallback onTap;
 
@@ -78,6 +77,27 @@ class BookCoverItemView extends GetView {
 
                     return Container();
                   },
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(top: 18.0),
+                  width: constraints.maxWidth,
+                  height: constraints.maxWidth,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: [
+                        0.3,
+                        0.8,
+                      ],
+                      colors: [
+                        Colors.transparent,
+                        color,
+                      ],
+                    ),
+                  ),
                 ),
 
                 // title

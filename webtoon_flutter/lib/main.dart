@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:webtoon_flutter/app/bindings/root_bindings.dart';
 import 'package:webtoon_flutter/app/serverpod.dart';
 
 import 'app/routes/app_pages.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
     GetMaterialApp(
       title: "Application",
       initialRoute: AppPages.INITIAL,
+      initialBinding: RootBinding(),
       getPages: AppPages.routes,
       themeMode: ThemeMode.system,
       theme: ThemeData(

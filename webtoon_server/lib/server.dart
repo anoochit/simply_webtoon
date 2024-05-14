@@ -1,3 +1,5 @@
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:serverpod/serverpod.dart';
 
 import 'package:webtoon_server/src/web/routes/root.dart';
@@ -24,11 +26,56 @@ void run(List<String> args) async {
   // auth config
   auth.AuthConfig.set(auth.AuthConfig(
     sendValidationEmail: (session, email, validationCode) async {
-      // TODO: sent signup validation code
+      // sent signup validation code
+      // Retrieve the credentials
+      final gmailAccount = session.serverpod.getPassword('gmailAccount')!;
+      final gmailAppPassword =
+          session.serverpod.getPassword('gmailAppPassword')!;
+
+      // Create a SMTP client for Gmail.
+      final smtpServer = gmail(gmailAccount, gmailAppPassword);
+
+      // Create an email message with the validation code.
+      final message = Message()
+        ..from = Address(gmailAccount)
+        ..recipients.add(email)
+        ..subject = 'Verification code for webtoon'
+        ..html = 'Your verification code is: $validationCode';
+
+      // Send the email message.
+      try {
+        await send(message, smtpServer);
+      } catch (_) {
+        // Return false if the email could not be sent.
+        return false;
+      }
+
       return true;
     },
     sendPasswordResetEmail: (session, userInfo, validationCode) async {
-      // TODO: sent password reset validation code
+      // sent password reset validation code
+      final gmailAccount = session.serverpod.getPassword('gmailAccount')!;
+      final gmailAppPassword =
+          session.serverpod.getPassword('gmailAppPassword')!;
+
+      // Create a SMTP client for Gmail.
+      final smtpServer = gmail(gmailAccount, gmailAppPassword);
+
+      // Create an email message with the validation code.
+      final message = Message()
+        ..from = Address(gmailAccount)
+        ..recipients.add(userInfo.email!)
+        ..subject = 'Verification code for reset password'
+        ..html = 'Your verification code is: $validationCode';
+
+      // Send the email message.
+      try {
+        await send(message, smtpServer);
+      } catch (_) {
+        // Return false if the email could not be sent.
+        return false;
+      }
+
       return true;
     },
   ));

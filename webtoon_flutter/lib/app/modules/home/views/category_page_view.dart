@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
+import 'package:parallax_animation/parallax_animation.dart';
 import 'package:webtoon_client/src/protocol/category.dart';
 import 'package:webtoon_flutter/app/modules/home/controllers/home_controller.dart';
 import 'package:webtoon_flutter/app/modules/home/views/book_cover_item_view.dart';
+import 'package:webtoon_flutter/app/modules/home/views/book_grid_view.dart';
+import 'package:webtoon_flutter/app/routes/app_pages.dart';
 
 class CategoryPageView extends GetView<HomeController> {
   const CategoryPageView({super.key, required this.category});
@@ -22,35 +25,28 @@ class CategoryPageView extends GetView<HomeController> {
       final color = books.first.color;
       final publisher = books.first.publisher;
 
-      return ListView(
-        controller: controller.scrollController,
-        children: [
-          const Gap(56.0),
-          // cover
-          BookCoverItemView(
-            backgroundImage: backgroundImage,
-            foregroundImage: foregroundImage,
-            titleImage: titleImage,
-            color: color,
-            publisher: publisher,
-            onTap: () {
-              // TODO : goto page
-            },
-          ),
-
-          // TODO : grid list books
-          GridView.builder(
-            shrinkWrap: true,
-            itemCount: 10,
-            physics: const ScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+      return ParallaxArea(
+        child: ListView(
+          controller: controller.scrollController,
+          children: [
+            const Gap(56.0),
+            // cover
+            BookCoverItemView(
+              backgroundImage: backgroundImage,
+              foregroundImage: foregroundImage,
+              titleImage: titleImage,
+              color: Color(int.parse(color.substring(2), radix: 16)),
+              publisher: publisher,
+              onTap: () {
+                // TODO : goto book detail screen
+                Get.toNamed(Routes.BOOK_DETAIL);
+              },
             ),
-            itemBuilder: (context, index) {
-              return const Card();
-            },
-          )
-        ],
+
+            // TODO : grid list books
+            BookGridView(books: books),
+          ],
+        ),
       );
     } else {
       return Container();
