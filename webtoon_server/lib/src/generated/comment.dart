@@ -13,7 +13,8 @@ import 'protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
-abstract class Comment extends _i1.TableRow {
+abstract class Comment extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
   Comment._({
     int? id,
     required this.comment,
@@ -40,30 +41,30 @@ abstract class Comment extends _i1.TableRow {
     _i3.UserInfo? userInfo,
   }) = _CommentImpl;
 
-  factory Comment.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Comment.fromJson(Map<String, dynamic> jsonSerialization) {
     return Comment(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      comment: serializationManager
-          .deserialize<String>(jsonSerialization['comment']),
-      timestamp: serializationManager
-          .deserialize<DateTime>(jsonSerialization['timestamp']),
-      bookId:
-          serializationManager.deserialize<int>(jsonSerialization['bookId']),
-      book: serializationManager
-          .deserialize<_i2.Book?>(jsonSerialization['book']),
-      parentId:
-          serializationManager.deserialize<int?>(jsonSerialization['parentId']),
-      parent: serializationManager
-          .deserialize<_i2.Comment?>(jsonSerialization['parent']),
-      replies: serializationManager
-          .deserialize<List<_i2.Comment>?>(jsonSerialization['replies']),
-      userInfoId: serializationManager
-          .deserialize<int>(jsonSerialization['userInfoId']),
-      userInfo: serializationManager
-          .deserialize<_i3.UserInfo?>(jsonSerialization['userInfo']),
+      id: jsonSerialization['id'] as int?,
+      comment: jsonSerialization['comment'] as String,
+      timestamp:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['timestamp']),
+      bookId: jsonSerialization['bookId'] as int,
+      book: jsonSerialization['book'] == null
+          ? null
+          : _i2.Book.fromJson(
+              (jsonSerialization['book'] as Map<String, dynamic>)),
+      parentId: jsonSerialization['parentId'] as int?,
+      parent: jsonSerialization['parent'] == null
+          ? null
+          : _i2.Comment.fromJson(
+              (jsonSerialization['parent'] as Map<String, dynamic>)),
+      replies: (jsonSerialization['replies'] as List?)
+          ?.map((e) => _i2.Comment.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      userInfoId: jsonSerialization['userInfoId'] as int,
+      userInfo: jsonSerialization['userInfo'] == null
+          ? null
+          : _i3.UserInfo.fromJson(
+              (jsonSerialization['userInfo'] as Map<String, dynamic>)),
     );
   }
 
@@ -122,19 +123,19 @@ abstract class Comment extends _i1.TableRow {
   }
 
   @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'comment': comment,
       'timestamp': timestamp.toJson(),
       'bookId': bookId,
-      if (book != null) 'book': book?.allToJson(),
+      if (book != null) 'book': book?.toJsonForProtocol(),
       if (parentId != null) 'parentId': parentId,
-      if (parent != null) 'parent': parent?.allToJson(),
+      if (parent != null) 'parent': parent?.toJsonForProtocol(),
       if (replies != null)
-        'replies': replies?.toJson(valueToJson: (v) => v.allToJson()),
+        'replies': replies?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       'userInfoId': userInfoId,
-      if (userInfo != null) 'userInfo': userInfo?.allToJson(),
+      if (userInfo != null) 'userInfo': userInfo?.toJsonForProtocol(),
     };
   }
 
@@ -540,7 +541,7 @@ class CommentRepository {
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Comment>> delete(
     _i1.Session session,
     List<Comment> rows, {
     _i1.Transaction? transaction,
@@ -551,7 +552,7 @@ class CommentRepository {
     );
   }
 
-  Future<int> deleteRow(
+  Future<Comment> deleteRow(
     _i1.Session session,
     Comment row, {
     _i1.Transaction? transaction,
@@ -562,7 +563,7 @@ class CommentRepository {
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Comment>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<CommentTable> where,
     _i1.Transaction? transaction,

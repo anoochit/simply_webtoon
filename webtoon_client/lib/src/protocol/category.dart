@@ -24,16 +24,13 @@ abstract class Category extends _i1.SerializableEntity {
     List<_i2.Book>? books,
   }) = _CategoryImpl;
 
-  factory Category.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Category.fromJson(Map<String, dynamic> jsonSerialization) {
     return Category(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
-      books: serializationManager
-          .deserialize<List<_i2.Book>?>(jsonSerialization['books']),
+      id: jsonSerialization['id'] as int?,
+      title: jsonSerialization['title'] as String,
+      books: (jsonSerialization['books'] as List?)
+          ?.map((e) => _i2.Book.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 

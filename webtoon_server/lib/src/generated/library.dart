@@ -12,7 +12,8 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i2;
 import 'protocol.dart' as _i3;
 
-abstract class Library extends _i1.TableRow {
+abstract class Library extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
   Library._({
     int? id,
     required this.userInfoId,
@@ -33,24 +34,24 @@ abstract class Library extends _i1.TableRow {
     _i3.Book? book,
   }) = _LibraryImpl;
 
-  factory Library.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Library.fromJson(Map<String, dynamic> jsonSerialization) {
     return Library(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      userInfoId: serializationManager
-          .deserialize<int>(jsonSerialization['userInfoId']),
-      userInfo: serializationManager
-          .deserialize<_i2.UserInfo?>(jsonSerialization['userInfo']),
-      espisodeId: serializationManager
-          .deserialize<int>(jsonSerialization['espisodeId']),
-      espisode: serializationManager
-          .deserialize<_i3.Espisode?>(jsonSerialization['espisode']),
-      bookId:
-          serializationManager.deserialize<int>(jsonSerialization['bookId']),
-      book: serializationManager
-          .deserialize<_i3.Book?>(jsonSerialization['book']),
+      id: jsonSerialization['id'] as int?,
+      userInfoId: jsonSerialization['userInfoId'] as int,
+      userInfo: jsonSerialization['userInfo'] == null
+          ? null
+          : _i2.UserInfo.fromJson(
+              (jsonSerialization['userInfo'] as Map<String, dynamic>)),
+      espisodeId: jsonSerialization['espisodeId'] as int,
+      espisode: jsonSerialization['espisode'] == null
+          ? null
+          : _i3.Espisode.fromJson(
+              (jsonSerialization['espisode'] as Map<String, dynamic>)),
+      bookId: jsonSerialization['bookId'] as int,
+      book: jsonSerialization['book'] == null
+          ? null
+          : _i3.Book.fromJson(
+              (jsonSerialization['book'] as Map<String, dynamic>)),
     );
   }
 
@@ -96,15 +97,15 @@ abstract class Library extends _i1.TableRow {
   }
 
   @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'userInfoId': userInfoId,
-      if (userInfo != null) 'userInfo': userInfo?.allToJson(),
+      if (userInfo != null) 'userInfo': userInfo?.toJsonForProtocol(),
       'espisodeId': espisodeId,
-      if (espisode != null) 'espisode': espisode?.allToJson(),
+      if (espisode != null) 'espisode': espisode?.toJsonForProtocol(),
       'bookId': bookId,
-      if (book != null) 'book': book?.allToJson(),
+      if (book != null) 'book': book?.toJsonForProtocol(),
     };
   }
 
@@ -434,7 +435,7 @@ class LibraryRepository {
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Library>> delete(
     _i1.Session session,
     List<Library> rows, {
     _i1.Transaction? transaction,
@@ -445,7 +446,7 @@ class LibraryRepository {
     );
   }
 
-  Future<int> deleteRow(
+  Future<Library> deleteRow(
     _i1.Session session,
     Library row, {
     _i1.Transaction? transaction,
@@ -456,7 +457,7 @@ class LibraryRepository {
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Library>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<LibraryTable> where,
     _i1.Transaction? transaction,

@@ -12,7 +12,8 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
-abstract class Espisode extends _i1.TableRow {
+abstract class Espisode extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
   Espisode._({
     int? id,
     required this.title,
@@ -33,24 +34,22 @@ abstract class Espisode extends _i1.TableRow {
     List<_i2.Library>? libraries,
   }) = _EspisodeImpl;
 
-  factory Espisode.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Espisode.fromJson(Map<String, dynamic> jsonSerialization) {
     return Espisode(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
-      cover: serializationManager
-          .deserialize<List<String>>(jsonSerialization['cover']),
-      image: serializationManager
-          .deserialize<List<String>>(jsonSerialization['image']),
-      bookId:
-          serializationManager.deserialize<int>(jsonSerialization['bookId']),
-      book: serializationManager
-          .deserialize<_i2.Book?>(jsonSerialization['book']),
-      libraries: serializationManager
-          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
+      id: jsonSerialization['id'] as int?,
+      title: jsonSerialization['title'] as String,
+      cover:
+          (jsonSerialization['cover'] as List).map((e) => e as String).toList(),
+      image:
+          (jsonSerialization['image'] as List).map((e) => e as String).toList(),
+      bookId: jsonSerialization['bookId'] as int,
+      book: jsonSerialization['book'] == null
+          ? null
+          : _i2.Book.fromJson(
+              (jsonSerialization['book'] as Map<String, dynamic>)),
+      libraries: (jsonSerialization['libraries'] as List?)
+          ?.map((e) => _i2.Library.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -97,16 +96,17 @@ abstract class Espisode extends _i1.TableRow {
   }
 
   @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'title': title,
       'cover': cover.toJson(),
       'image': image.toJson(),
       'bookId': bookId,
-      if (book != null) 'book': book?.allToJson(),
+      if (book != null) 'book': book?.toJsonForProtocol(),
       if (libraries != null)
-        'libraries': libraries?.toJson(valueToJson: (v) => v.allToJson()),
+        'libraries':
+            libraries?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
@@ -443,7 +443,7 @@ class EspisodeRepository {
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Espisode>> delete(
     _i1.Session session,
     List<Espisode> rows, {
     _i1.Transaction? transaction,
@@ -454,7 +454,7 @@ class EspisodeRepository {
     );
   }
 
-  Future<int> deleteRow(
+  Future<Espisode> deleteRow(
     _i1.Session session,
     Espisode row, {
     _i1.Transaction? transaction,
@@ -465,7 +465,7 @@ class EspisodeRepository {
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Espisode>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<EspisodeTable> where,
     _i1.Transaction? transaction,

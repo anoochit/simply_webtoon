@@ -48,40 +48,40 @@ class Protocol extends _i1.SerializationManager {
       return customConstructors[t]!(data, this) as T;
     }
     if (t == _i2.Book) {
-      return _i2.Book.fromJson(data, this) as T;
+      return _i2.Book.fromJson(data) as T;
     }
     if (t == _i3.Category) {
-      return _i3.Category.fromJson(data, this) as T;
+      return _i3.Category.fromJson(data) as T;
     }
     if (t == _i4.Comment) {
-      return _i4.Comment.fromJson(data, this) as T;
+      return _i4.Comment.fromJson(data) as T;
     }
     if (t == _i5.Espisode) {
-      return _i5.Espisode.fromJson(data, this) as T;
+      return _i5.Espisode.fromJson(data) as T;
     }
     if (t == _i6.Example) {
-      return _i6.Example.fromJson(data, this) as T;
+      return _i6.Example.fromJson(data) as T;
     }
     if (t == _i7.Library) {
-      return _i7.Library.fromJson(data, this) as T;
+      return _i7.Library.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Book?>()) {
-      return (data != null ? _i2.Book.fromJson(data, this) : null) as T;
+      return (data != null ? _i2.Book.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i3.Category?>()) {
-      return (data != null ? _i3.Category.fromJson(data, this) : null) as T;
+      return (data != null ? _i3.Category.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i4.Comment?>()) {
-      return (data != null ? _i4.Comment.fromJson(data, this) : null) as T;
+      return (data != null ? _i4.Comment.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i5.Espisode?>()) {
-      return (data != null ? _i5.Espisode.fromJson(data, this) : null) as T;
+      return (data != null ? _i5.Espisode.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i6.Example?>()) {
-      return (data != null ? _i6.Example.fromJson(data, this) : null) as T;
+      return (data != null ? _i6.Example.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i7.Library?>()) {
-      return (data != null ? _i7.Library.fromJson(data, this) : null) as T;
+      return (data != null ? _i7.Library.fromJson(data) : null) as T;
     }
     if (t == List<String>) {
       return (data as List).map((e) => deserialize<String>(e)).toList()

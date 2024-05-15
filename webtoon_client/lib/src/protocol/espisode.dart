@@ -32,24 +32,22 @@ abstract class Espisode extends _i1.SerializableEntity {
     List<_i2.Library>? libraries,
   }) = _EspisodeImpl;
 
-  factory Espisode.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Espisode.fromJson(Map<String, dynamic> jsonSerialization) {
     return Espisode(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
-      cover: serializationManager
-          .deserialize<List<String>>(jsonSerialization['cover']),
-      image: serializationManager
-          .deserialize<List<String>>(jsonSerialization['image']),
-      bookId:
-          serializationManager.deserialize<int>(jsonSerialization['bookId']),
-      book: serializationManager
-          .deserialize<_i2.Book?>(jsonSerialization['book']),
-      libraries: serializationManager
-          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
+      id: jsonSerialization['id'] as int?,
+      title: jsonSerialization['title'] as String,
+      cover:
+          (jsonSerialization['cover'] as List).map((e) => e as String).toList(),
+      image:
+          (jsonSerialization['image'] as List).map((e) => e as String).toList(),
+      bookId: jsonSerialization['bookId'] as int,
+      book: jsonSerialization['book'] == null
+          ? null
+          : _i2.Book.fromJson(
+              (jsonSerialization['book'] as Map<String, dynamic>)),
+      libraries: (jsonSerialization['libraries'] as List?)
+          ?.map((e) => _i2.Library.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 

@@ -40,32 +40,29 @@ abstract class Book extends _i1.SerializableEntity {
     List<_i2.Comment>? comments,
   }) = _BookImpl;
 
-  factory Book.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Book.fromJson(Map<String, dynamic> jsonSerialization) {
     return Book(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
-      description: serializationManager
-          .deserialize<String>(jsonSerialization['description']),
-      cover: serializationManager
-          .deserialize<List<String>>(jsonSerialization['cover']),
-      color:
-          serializationManager.deserialize<String>(jsonSerialization['color']),
-      publisher: serializationManager
-          .deserialize<String>(jsonSerialization['publisher']),
-      espisodes: serializationManager
-          .deserialize<List<_i2.Espisode>?>(jsonSerialization['espisodes']),
-      categoryId: serializationManager
-          .deserialize<int>(jsonSerialization['categoryId']),
-      category: serializationManager
-          .deserialize<_i2.Category?>(jsonSerialization['category']),
-      libraries: serializationManager
-          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
-      comments: serializationManager
-          .deserialize<List<_i2.Comment>?>(jsonSerialization['comments']),
+      id: jsonSerialization['id'] as int?,
+      title: jsonSerialization['title'] as String,
+      description: jsonSerialization['description'] as String,
+      cover:
+          (jsonSerialization['cover'] as List).map((e) => e as String).toList(),
+      color: jsonSerialization['color'] as String,
+      publisher: jsonSerialization['publisher'] as String,
+      espisodes: (jsonSerialization['espisodes'] as List?)
+          ?.map((e) => _i2.Espisode.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      categoryId: jsonSerialization['categoryId'] as int,
+      category: jsonSerialization['category'] == null
+          ? null
+          : _i2.Category.fromJson(
+              (jsonSerialization['category'] as Map<String, dynamic>)),
+      libraries: (jsonSerialization['libraries'] as List?)
+          ?.map((e) => _i2.Library.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      comments: (jsonSerialization['comments'] as List?)
+          ?.map((e) => _i2.Comment.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 

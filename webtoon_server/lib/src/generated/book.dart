@@ -12,7 +12,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
-abstract class Book extends _i1.TableRow {
+abstract class Book extends _i1.TableRow implements _i1.ProtocolSerialization {
   Book._({
     int? id,
     required this.title,
@@ -41,32 +41,29 @@ abstract class Book extends _i1.TableRow {
     List<_i2.Comment>? comments,
   }) = _BookImpl;
 
-  factory Book.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Book.fromJson(Map<String, dynamic> jsonSerialization) {
     return Book(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
-      description: serializationManager
-          .deserialize<String>(jsonSerialization['description']),
-      cover: serializationManager
-          .deserialize<List<String>>(jsonSerialization['cover']),
-      color:
-          serializationManager.deserialize<String>(jsonSerialization['color']),
-      publisher: serializationManager
-          .deserialize<String>(jsonSerialization['publisher']),
-      espisodes: serializationManager
-          .deserialize<List<_i2.Espisode>?>(jsonSerialization['espisodes']),
-      categoryId: serializationManager
-          .deserialize<int>(jsonSerialization['categoryId']),
-      category: serializationManager
-          .deserialize<_i2.Category?>(jsonSerialization['category']),
-      libraries: serializationManager
-          .deserialize<List<_i2.Library>?>(jsonSerialization['libraries']),
-      comments: serializationManager
-          .deserialize<List<_i2.Comment>?>(jsonSerialization['comments']),
+      id: jsonSerialization['id'] as int?,
+      title: jsonSerialization['title'] as String,
+      description: jsonSerialization['description'] as String,
+      cover:
+          (jsonSerialization['cover'] as List).map((e) => e as String).toList(),
+      color: jsonSerialization['color'] as String,
+      publisher: jsonSerialization['publisher'] as String,
+      espisodes: (jsonSerialization['espisodes'] as List?)
+          ?.map((e) => _i2.Espisode.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      categoryId: jsonSerialization['categoryId'] as int,
+      category: jsonSerialization['category'] == null
+          ? null
+          : _i2.Category.fromJson(
+              (jsonSerialization['category'] as Map<String, dynamic>)),
+      libraries: (jsonSerialization['libraries'] as List?)
+          ?.map((e) => _i2.Library.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      comments: (jsonSerialization['comments'] as List?)
+          ?.map((e) => _i2.Comment.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -131,7 +128,7 @@ abstract class Book extends _i1.TableRow {
   }
 
   @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'title': title,
@@ -140,13 +137,15 @@ abstract class Book extends _i1.TableRow {
       'color': color,
       'publisher': publisher,
       if (espisodes != null)
-        'espisodes': espisodes?.toJson(valueToJson: (v) => v.allToJson()),
+        'espisodes':
+            espisodes?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       'categoryId': categoryId,
-      if (category != null) 'category': category?.allToJson(),
+      if (category != null) 'category': category?.toJsonForProtocol(),
       if (libraries != null)
-        'libraries': libraries?.toJson(valueToJson: (v) => v.allToJson()),
+        'libraries':
+            libraries?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
       if (comments != null)
-        'comments': comments?.toJson(valueToJson: (v) => v.allToJson()),
+        'comments': comments?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
@@ -607,7 +606,7 @@ class BookRepository {
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Book>> delete(
     _i1.Session session,
     List<Book> rows, {
     _i1.Transaction? transaction,
@@ -618,7 +617,7 @@ class BookRepository {
     );
   }
 
-  Future<int> deleteRow(
+  Future<Book> deleteRow(
     _i1.Session session,
     Book row, {
     _i1.Transaction? transaction,
@@ -629,7 +628,7 @@ class BookRepository {
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Book>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<BookTable> where,
     _i1.Transaction? transaction,

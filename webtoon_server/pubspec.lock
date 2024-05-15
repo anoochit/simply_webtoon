@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "0763b45fa9294197a2885c8567927e2830ade852e5c896fd4ab7e0e348d0f373"
+      sha256: ecf4273855368121b1caed0d10d4513c7241dfc813f7d3c8933b36622ae9b265
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.0"
+    version: "3.5.1"
   args:
     dependency: transitive
     description:
@@ -29,10 +29,10 @@ packages:
     dependency: transitive
     description:
       name: asn1lib
-      sha256: c9c85fedbe2188b95133cbe960e16f5f448860f7133330e272edbbca5893ddc6
+      sha256: "58082b3f0dca697204dbab0ef9ff208bfaea7767ea771076af9a343488428dda"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.2"
+    version: "1.5.3"
   async:
     dependency: transitive
     description:
@@ -277,10 +277,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "25dfcaf170a0190f47ca6355bdd4552cb8924b430512ff0cafb8db9bd41fe33b"
+      sha256: bdb68674043280c3428e9ec998512fb681678676b3c54e773629ffe74419f8c7
       url: "https://pub.dev"
     source: hosted
-    version: "1.14.0"
+    version: "1.15.0"
   mime:
     dependency: transitive
     description:
@@ -333,10 +333,10 @@ packages:
     dependency: transitive
     description:
       name: pointycastle
-      sha256: "79fbafed02cfdbe85ef3fd06c7f4bc2cbcba0177e61b765264853d4253b21744"
+      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.0"
+    version: "3.9.1"
   pool:
     dependency: transitive
     description:
@@ -405,50 +405,34 @@ packages:
     dependency: "direct main"
     description:
       name: serverpod
-      sha256: "6b3bbebc731c28821fe39478242ef30055dc473c1a97213c260d1abad97736e2"
+      sha256: e370f1afbe2e061b85f8520f0b4905157bfd4d5d85d712a83d3e804d4c2fc3ac
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0-alpha.2"
+    version: "2.0.0-alpha.3"
   serverpod_auth_server:
     dependency: "direct main"
     description:
       name: serverpod_auth_server
-      sha256: f44addb77dd32b01bd09bcb1ea5f680d42a82f432d36df13ef7182606b96d5a9
+      sha256: "982f7e618895d1f9c46612556aeb4ed8ee7596b86733f8923ee5a02875f4da09"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0-alpha.2"
-  serverpod_client:
-    dependency: transitive
-    description:
-      name: serverpod_client
-      sha256: af17179d6bb7dfd2e0ff918dbb5aab5657af37484fb8a512235a10c9e8772e73
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0-alpha.2"
+    version: "2.0.0-alpha.3"
   serverpod_serialization:
     dependency: transitive
     description:
       name: serverpod_serialization
-      sha256: "3b200505e67fd24ffbfa55e94c161cce6b9e4811898e15322d842e83bf28625e"
+      sha256: "2af229218741be8f4a55cc99b2b8b89b012c63382bb8e1188ec4654aea5d8b57"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0-alpha.2"
-  serverpod_service_client:
-    dependency: transitive
-    description:
-      name: serverpod_service_client
-      sha256: d480b482515c3a480e742c595dc880147f9e32c0d546bf6870fec062d8a67425
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0-alpha.2"
+    version: "2.0.0-alpha.3"
   serverpod_shared:
     dependency: transitive
     description:
       name: serverpod_shared
-      sha256: "71f4642e7f2ca6e870b3369347e2d08be52024b1d6e7d443ef5cf3def5a68471"
+      sha256: d80ec0c45441b7c5d3a5da8b6fcd1d1f8fbedaad7f0932c6731b3a4e1f383a5b
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0-alpha.2"
+    version: "2.0.0-alpha.3"
   sortedmap:
     dependency: transitive
     description:
@@ -565,10 +549,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: "3923c89304b715fb1eb6423f017651664a03bf5f4b29983627c4da791f74a4ec"
+      sha256: "7475cb4dd713d57b6f7464c0e13f06da0d535d8b2067e188962a59bac2cf280b"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.1"
+    version: "14.2.2"
   web:
     dependency: transitive
     description:

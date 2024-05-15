@@ -39,30 +39,30 @@ abstract class Comment extends _i1.SerializableEntity {
     _i3.UserInfo? userInfo,
   }) = _CommentImpl;
 
-  factory Comment.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Comment.fromJson(Map<String, dynamic> jsonSerialization) {
     return Comment(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      comment: serializationManager
-          .deserialize<String>(jsonSerialization['comment']),
-      timestamp: serializationManager
-          .deserialize<DateTime>(jsonSerialization['timestamp']),
-      bookId:
-          serializationManager.deserialize<int>(jsonSerialization['bookId']),
-      book: serializationManager
-          .deserialize<_i2.Book?>(jsonSerialization['book']),
-      parentId:
-          serializationManager.deserialize<int?>(jsonSerialization['parentId']),
-      parent: serializationManager
-          .deserialize<_i2.Comment?>(jsonSerialization['parent']),
-      replies: serializationManager
-          .deserialize<List<_i2.Comment>?>(jsonSerialization['replies']),
-      userInfoId: serializationManager
-          .deserialize<int>(jsonSerialization['userInfoId']),
-      userInfo: serializationManager
-          .deserialize<_i3.UserInfo?>(jsonSerialization['userInfo']),
+      id: jsonSerialization['id'] as int?,
+      comment: jsonSerialization['comment'] as String,
+      timestamp:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['timestamp']),
+      bookId: jsonSerialization['bookId'] as int,
+      book: jsonSerialization['book'] == null
+          ? null
+          : _i2.Book.fromJson(
+              (jsonSerialization['book'] as Map<String, dynamic>)),
+      parentId: jsonSerialization['parentId'] as int?,
+      parent: jsonSerialization['parent'] == null
+          ? null
+          : _i2.Comment.fromJson(
+              (jsonSerialization['parent'] as Map<String, dynamic>)),
+      replies: (jsonSerialization['replies'] as List?)
+          ?.map((e) => _i2.Comment.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      userInfoId: jsonSerialization['userInfoId'] as int,
+      userInfo: jsonSerialization['userInfo'] == null
+          ? null
+          : _i3.UserInfo.fromJson(
+              (jsonSerialization['userInfo'] as Map<String, dynamic>)),
     );
   }
 

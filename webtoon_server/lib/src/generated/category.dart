@@ -12,7 +12,8 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'protocol.dart' as _i2;
 import 'package:serverpod_serialization/serverpod_serialization.dart';
 
-abstract class Category extends _i1.TableRow {
+abstract class Category extends _i1.TableRow
+    implements _i1.ProtocolSerialization {
   Category._({
     int? id,
     required this.title,
@@ -25,16 +26,13 @@ abstract class Category extends _i1.TableRow {
     List<_i2.Book>? books,
   }) = _CategoryImpl;
 
-  factory Category.fromJson(
-    Map<String, dynamic> jsonSerialization,
-    _i1.SerializationManager serializationManager,
-  ) {
+  factory Category.fromJson(Map<String, dynamic> jsonSerialization) {
     return Category(
-      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
-      title:
-          serializationManager.deserialize<String>(jsonSerialization['title']),
-      books: serializationManager
-          .deserialize<List<_i2.Book>?>(jsonSerialization['books']),
+      id: jsonSerialization['id'] as int?,
+      title: jsonSerialization['title'] as String,
+      books: (jsonSerialization['books'] as List?)
+          ?.map((e) => _i2.Book.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -64,12 +62,12 @@ abstract class Category extends _i1.TableRow {
   }
 
   @override
-  Map<String, dynamic> allToJson() {
+  Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
       'title': title,
       if (books != null)
-        'books': books?.toJson(valueToJson: (v) => v.allToJson()),
+        'books': books?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
@@ -331,7 +329,7 @@ class CategoryRepository {
     );
   }
 
-  Future<List<int>> delete(
+  Future<List<Category>> delete(
     _i1.Session session,
     List<Category> rows, {
     _i1.Transaction? transaction,
@@ -342,7 +340,7 @@ class CategoryRepository {
     );
   }
 
-  Future<int> deleteRow(
+  Future<Category> deleteRow(
     _i1.Session session,
     Category row, {
     _i1.Transaction? transaction,
@@ -353,7 +351,7 @@ class CategoryRepository {
     );
   }
 
-  Future<List<int>> deleteWhere(
+  Future<List<Category>> deleteWhere(
     _i1.Session session, {
     required _i1.WhereExpressionBuilder<CategoryTable> where,
     _i1.Transaction? transaction,
