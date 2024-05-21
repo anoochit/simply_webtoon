@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:webtoon_flutter/app/modules/home/views/feed_view.dart';
-import 'package:webtoon_flutter/app/modules/home/views/giftbox_view.dart';
-import 'package:webtoon_flutter/app/modules/home/views/library_view.dart';
-import 'package:webtoon_flutter/app/modules/home/views/navigation_bar_view.dart';
-import 'package:webtoon_flutter/app/modules/home/views/schedule_view.dart';
 
 import '../controllers/home_controller.dart';
+import 'feed_view.dart';
+import 'giftbox_view.dart';
+import 'library_view.dart';
+import 'navigation_bar_view.dart';
+import 'schedule_view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});

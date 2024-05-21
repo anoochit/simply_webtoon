@@ -25,7 +25,7 @@ class HomeController extends GetxController {
   final listMenuIcon = [
     Icons.home,
     Icons.calendar_month,
-    Icons.gif_box,
+    Icons.card_giftcard,
     Icons.inbox,
   ];
 

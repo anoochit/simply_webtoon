@@ -1,5 +1,6 @@
 import 'package:serverpod/serverpod.dart';
 import 'package:webtoon_server/src/generated/protocol.dart';
+import 'package:intl/intl.dart';
 
 // This is an example endpoint of your server. It's best practice to use the
 // `Endpoint` ending of the class name, but it will be removed when accessing
@@ -25,6 +26,9 @@ class ExampleEndpoint extends Endpoint {
     String sampleCover = "books/sample_cover.webp";
     String sampleItem = "books/sample_item.webp";
     String sampleLabel = "books/sample_label.webp";
+    String samplePage1 = "books/sample_page1.webp";
+    String samplePage2 = "books/sample_page2.webp";
+    String samplePage3 = "books/sample_page3.webp";
 
     // add data
     for (int i = 0; i < 6; i++) {
@@ -44,9 +48,10 @@ class ExampleEndpoint extends Endpoint {
               .insertRow(
             session,
             Book(
-              title: 'Book${b + 1}',
-              description: 'description',
-              publisher: 'publisher name',
+              title: 'Solo Leveling',
+              description:
+                  'Ex reprehenderit mollit incididunt minim elit. Minim sit voluptate consectetur commodo in do tempor. Laborum non non pariatur pariatur cupidatat ut veniam consequat amet eiusmod mollit sunt.',
+              publisher: 'incididunt minim elit',
               color: '0xFF1F1051',
               cover: [
                 sampleBackground,
@@ -60,21 +65,22 @@ class ExampleEndpoint extends Endpoint {
               .then((book) async {
             // add espidode
             for (int e = 0; e < 20; e++) {
+              NumberFormat formatter = NumberFormat("00");
+              String formattedNumber = formatter.format(e + 1);
+
               await Espisode.db.insertRow(
                 session,
                 Espisode(
-                  title: 'EP${e + 1}',
+                  title: 'EP${formattedNumber}',
                   cover: [
                     sampleBackground,
                     sampleCover,
                     sampleLabel,
                   ],
                   image: [
-                    sampleBackground,
-                    sampleBackground,
-                    sampleBackground,
-                    sampleBackground,
-                    sampleBackground,
+                    samplePage1,
+                    samplePage2,
+                    samplePage3,
                   ],
                   bookId: book.id!,
                 ),
