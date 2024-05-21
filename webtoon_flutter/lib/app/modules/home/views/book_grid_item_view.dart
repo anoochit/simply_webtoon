@@ -7,29 +7,30 @@ import 'package:parallax_animation/parallax_animation.dart';
 import 'package:webtoon_flutter/app/data/services/minio_service.dart';
 import 'package:webtoon_flutter/app/routes/app_pages.dart';
 
+import '../../book_detail/controllers/book_detail_controller.dart';
+
 class BookGridItemView extends GetView {
   const BookGridItemView(
       {Key? key,
       required this.backgroundImage,
       required this.foregroundImage,
       required this.titleImage,
-      required this.color})
+      required this.color,
+      required this.onTap})
       : super(key: key);
 
   final String backgroundImage;
   final String foregroundImage;
   final String titleImage;
   final Color color;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(6.0),
       child: GestureDetector(
-        onTap: () {
-          // TODO:  goto book detail screen
-          Get.toNamed(Routes.BOOK_DETAIL);
-        },
+        onTap: () => onTap(),
         child: ParallaxWidget(
           fixedHorizontal: true,
           overflowHeightFactor: 1.3,

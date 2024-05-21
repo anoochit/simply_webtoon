@@ -4,6 +4,8 @@ import '../modules/book_detail/bindings/book_detail_binding.dart';
 import '../modules/book_detail/views/book_detail_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/read/bindings/read_binding.dart';
+import '../modules/read/views/read_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -24,6 +26,12 @@ class AppPages {
       name: _Paths.BOOK_DETAIL,
       page: () => const BookDetailView(),
       binding: BookDetailBinding(),
+      transition: Transition.circularReveal,
+    ),
+    GetPage(
+      name: _Paths.READ,
+      page: () => const ReadView(),
+      binding: ReadBinding(),
       transition: Transition.circularReveal,
     ),
   ];

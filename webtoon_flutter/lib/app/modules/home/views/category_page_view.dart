@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:parallax_animation/parallax_animation.dart';
 import 'package:webtoon_client/src/protocol/category.dart';
+import 'package:webtoon_flutter/app/modules/book_detail/controllers/book_detail_controller.dart';
 import 'package:webtoon_flutter/app/modules/home/controllers/home_controller.dart';
 import 'package:webtoon_flutter/app/modules/home/views/book_cover_item_view.dart';
 import 'package:webtoon_flutter/app/modules/home/views/book_grid_view.dart';
@@ -39,6 +40,9 @@ class CategoryPageView extends GetView<HomeController> {
               publisher: publisher,
               onTap: () {
                 // TODO : goto book detail screen
+                BookDetailController bookDetailController =
+                    Get.find<BookDetailController>();
+                bookDetailController.book = books.first;
                 Get.toNamed(Routes.BOOK_DETAIL);
               },
             ),
