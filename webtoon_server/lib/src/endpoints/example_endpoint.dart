@@ -71,7 +71,7 @@ class ExampleEndpoint extends Endpoint {
               await Espisode.db.insertRow(
                 session,
                 Espisode(
-                  title: 'EP${formattedNumber}',
+                  title: 'EP$formattedNumber',
                   cover: [
                     sampleBackground,
                     sampleCover,

@@ -5,7 +5,6 @@ import 'package:webtoon_client/webtoon_client.dart';
 
 class ReadController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  //TODO: Implement ReadController
   late Espisode espisode;
   ScrollController scrollController = ScrollController();
 

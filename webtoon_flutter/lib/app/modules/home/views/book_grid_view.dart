@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:webtoon_client/src/protocol/book.dart';
+import 'package:webtoon_client/webtoon_client.dart';
 import 'package:webtoon_flutter/app/modules/home/views/book_grid_item_view.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../book_detail/controllers/book_detail_controller.dart';
 
 class BookGridView extends GetView {
-  const BookGridView({Key? key, required this.books}) : super(key: key);
+  const BookGridView({super.key, required this.books});
 
   final List<Book> books;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(4.0),
       shrinkWrap: true,
       itemCount: books.length,
-      physics: const ScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: 0.47,
@@ -38,7 +38,7 @@ class BookGridView extends GetView {
             titleImage: titleImage,
             color: Color(int.parse(color.substring(2), radix: 16)),
             onTap: () {
-              // TODO:  goto book detail screen
+              // goto book detail screen
               BookDetailController bookDetailController =
                   Get.find<BookDetailController>();
               bookDetailController.book = book;

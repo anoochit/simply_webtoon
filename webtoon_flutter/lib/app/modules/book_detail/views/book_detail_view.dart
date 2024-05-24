@@ -11,7 +11,7 @@ import 'package:webtoon_flutter/app/modules/book_detail/views/info_view.dart';
 import '../controllers/book_detail_controller.dart';
 
 class BookDetailView extends GetView<BookDetailController> {
-  const BookDetailView({Key? key}) : super(key: key);
+  const BookDetailView({super.key});
   @override
   Widget build(BuildContext context) {
     final book = controller.book;
@@ -35,7 +35,7 @@ class BookDetailView extends GetView<BookDetailController> {
             backgroundColor: color,
             surfaceTintColor: color,
             expandedHeight: MediaQuery.sizeOf(context).width * 0.8,
-            iconTheme: IconThemeData(color: Colors.white),
+            iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
               background: FutureBuilder(
@@ -60,75 +60,73 @@ class BookDetailView extends GetView<BookDetailController> {
                         builder: (BuildContext context,
                             AsyncSnapshot foregroundSnapshot) {
                           if (foregroundSnapshot.hasData) {
-                            return Container(
-                              child: Stack(
-                                children: [
-                                  // foreground image
-                                  Center(
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.9,
-                                      child: CachedNetworkImage(
-                                        imageUrl: foregroundSnapshot.data,
-                                        cacheKey: foregroundImage,
-                                      ),
+                            return Stack(
+                              children: [
+                                // foreground image
+                                Center(
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.9,
+                                    child: CachedNetworkImage(
+                                      imageUrl: foregroundSnapshot.data,
+                                      cacheKey: foregroundImage,
                                     ),
                                   ),
+                                ),
 
-                                  // gradiant
-                                  Positioned.fill(
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          stops: [
-                                            0.3,
-                                            0.8,
-                                          ],
-                                          colors: [
-                                            Colors.transparent,
-                                            color,
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  // title
-                                  Positioned.fill(
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      alignment: Alignment.bottomCenter,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          // title
-                                          Text(
-                                            title,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge!
-                                                .copyWith(color: Colors.white),
-                                          ),
-                                          Gap(8.0),
-
-                                          // publisher
-                                          Text(
-                                            publisher,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .copyWith(color: Colors.white),
-                                          ),
-                                          Gap(8.0),
+                                // gradiant
+                                Positioned.fill(
+                                  child: Container(
+                                    width: MediaQuery.sizeOf(context).width,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: const [
+                                          0.3,
+                                          0.8,
+                                        ],
+                                        colors: [
+                                          Colors.transparent,
+                                          color,
                                         ],
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                ),
+
+                                // title
+                                Positioned.fill(
+                                  child: Container(
+                                    width: MediaQuery.sizeOf(context).width,
+                                    alignment: Alignment.bottomCenter,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        // title
+                                        Text(
+                                          title,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge!
+                                              .copyWith(color: Colors.white),
+                                        ),
+                                        const Gap(8.0),
+
+                                        // publisher
+                                        Text(
+                                          publisher,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(color: Colors.white),
+                                        ),
+                                        const Gap(8.0),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
                             );
                           }
                           return Container();
@@ -158,7 +156,7 @@ class BookDetailView extends GetView<BookDetailController> {
                   onPressed: () {
                     controller.navIndex.value = 0;
                   },
-                  child: Text(
+                  child: const Text(
                     'Espisode',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -169,7 +167,7 @@ class BookDetailView extends GetView<BookDetailController> {
                   onPressed: () {
                     controller.navIndex.value = 1;
                   },
-                  child: Text(
+                  child: const Text(
                     'Info',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -180,7 +178,7 @@ class BookDetailView extends GetView<BookDetailController> {
                   onPressed: () {
                     controller.navIndex.value = 2;
                   },
-                  child: Text(
+                  child: const Text(
                     'Comment',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -196,8 +194,8 @@ class BookDetailView extends GetView<BookDetailController> {
                 index: controller.navIndex.value,
                 children: [
                   EspisodeView(espisodes: espisodes),
-                  InfoView(),
-                  CommentView(),
+                  InfoView(description: description),
+                  CommentView(comments: comments),
                 ],
               ),
             ),

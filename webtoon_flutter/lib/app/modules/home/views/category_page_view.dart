@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 import 'package:parallax_animation/parallax_animation.dart';
-import 'package:webtoon_client/src/protocol/category.dart';
+import 'package:webtoon_client/webtoon_client.dart';
 import 'package:webtoon_flutter/app/modules/book_detail/controllers/book_detail_controller.dart';
 import 'package:webtoon_flutter/app/modules/home/controllers/home_controller.dart';
 import 'package:webtoon_flutter/app/modules/home/views/book_cover_item_view.dart';
@@ -39,7 +39,7 @@ class CategoryPageView extends GetView<HomeController> {
               color: Color(int.parse(color.substring(2), radix: 16)),
               publisher: publisher,
               onTap: () {
-                // TODO : goto book detail screen
+                // goto book detail screen
                 BookDetailController bookDetailController =
                     Get.find<BookDetailController>();
                 bookDetailController.book = books.first;
@@ -47,7 +47,7 @@ class CategoryPageView extends GetView<HomeController> {
               },
             ),
 
-            // TODO : grid list books
+            // grid list books
             BookGridView(books: books),
           ],
         ),

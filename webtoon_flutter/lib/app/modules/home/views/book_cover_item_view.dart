@@ -88,7 +88,7 @@ class BookCoverItemView extends GetView {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      stops: [
+                      stops: const [
                         0.3,
                         0.8,
                       ],

@@ -1,14 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-
 import 'package:get/get.dart';
 import 'package:webtoon_flutter/app/data/services/minio_service.dart';
 
 import '../controllers/read_controller.dart';
 
 class ReadView extends GetView<ReadController> {
-  const ReadView({Key? key}) : super(key: key);
+  const ReadView({super.key});
   @override
   Widget build(BuildContext context) {
     final espisode = controller.espisode;
@@ -28,7 +26,7 @@ class ReadView extends GetView<ReadController> {
               controller: controller.scrollController,
               child: ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: images.length,
                 itemBuilder: (BuildContext context, int index) {
                   return FutureBuilder(
@@ -53,31 +51,16 @@ class ReadView extends GetView<ReadController> {
             builder: (controller) {
               return FadeTransition(
                 opacity: controller.fadeAnimation,
-                child: Container(
-                  height: Get.statusBarHeight,
-                  width: Get.width,
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          onPressed: () => Get.back(),
-                        ),
-                        Text(
-                          title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const Gap(48.0),
-                      ],
-                    ),
-                  ),
-                ),
+                child: SizedBox(
+                    height: Get.statusBarHeight,
+                    child: AppBar(
+                      title: Text(title),
+                      backgroundColor:
+                          Theme.of(context).colorScheme.inversePrimary,
+                      surfaceTintColor:
+                          Theme.of(context).colorScheme.inversePrimary,
+                      centerTitle: true,
+                    )),
               );
             },
           ),
@@ -88,8 +71,7 @@ class ReadView extends GetView<ReadController> {
               return Positioned.fill(
                 child: FadeTransition(
                   opacity: controller.fadeAnimation,
-                  child: Container(
-                    width: Get.width,
+                  child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 32.0),

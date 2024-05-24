@@ -13,7 +13,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final statusBarHeight = Get.statusBarHeight;
+    final statusBarHeight = Get.statusBarHeight + kToolbarHeight;
     final onlyStatusBarHeight = MediaQuery.of(context).padding.top;
 
     // return Scaffold(

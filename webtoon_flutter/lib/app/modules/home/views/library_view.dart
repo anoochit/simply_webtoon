@@ -10,7 +10,7 @@ class LibraryView extends GetView {
   const LibraryView({super.key});
   @override
   Widget build(BuildContext context) {
-    // TODO : check signin session and add signin button
+    // check signin session and add signin button
 
     return GetBuilder<AppController>(builder: (controller) {
       return Center(
@@ -18,7 +18,7 @@ class LibraryView extends GetView {
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  const Text(
                     'LibraryView is working',
                     style: TextStyle(fontSize: 20),
                   ),
@@ -27,7 +27,7 @@ class LibraryView extends GetView {
                       // sign out
                       sessionManager.signOut();
                     },
-                    child: Text('Sign Out'),
+                    child: const Text('Sign Out'),
                   )
                 ],
               )

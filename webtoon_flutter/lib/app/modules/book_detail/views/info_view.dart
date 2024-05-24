@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InfoView extends GetView {
-  const InfoView({Key? key}) : super(key: key);
+  const InfoView({super.key, required this.description});
+
+  final String description;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'InfoView is working',
-        style: TextStyle(fontSize: 20),
-      ),
+    return Text(
+      description,
     );
   }
 }

@@ -12,7 +12,6 @@ class FeedView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // TODO : use data from database
         Obx(
           () => CarouselSlider(
             carouselController: controller.pageCarouselController,

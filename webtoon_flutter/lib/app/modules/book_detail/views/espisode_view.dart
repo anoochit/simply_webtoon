@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:webtoon_client/src/protocol/espisode.dart';
+import 'package:webtoon_client/webtoon_client.dart';
 import 'package:webtoon_flutter/app/data/services/minio_service.dart';
 import 'package:webtoon_flutter/app/modules/read/controllers/read_controller.dart';
 import 'package:webtoon_flutter/app/routes/app_pages.dart';
@@ -16,8 +16,8 @@ class EspisodeView extends GetView {
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: ScrollPhysics(),
-      padding: EdgeInsets.all(4.0),
+      physics: const ScrollPhysics(),
+      padding: const EdgeInsets.all(4.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 4.0,
@@ -37,21 +37,24 @@ class EspisodeView extends GetView {
             children: [
               // espisode cover
               Expanded(
-                child: Container(
-                  width: double.maxFinite,
-                  child: FutureBuilder(
-                    future: MinioService().getDownloadUrl(foregroundImage),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return CachedNetworkImage(
-                          imageUrl: snapshot.data,
-                          cacheKey: foregroundImage,
-                          fit: BoxFit.fitWidth,
-                        );
-                      }
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6.0),
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: FutureBuilder(
+                      future: MinioService().getDownloadUrl(foregroundImage),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          return CachedNetworkImage(
+                            imageUrl: snapshot.data,
+                            cacheKey: foregroundImage,
+                            fit: BoxFit.fitWidth,
+                          );
+                        }
 
-                      return Container();
-                    },
+                        return Container();
+                      },
+                    ),
                   ),
                 ),
               ),

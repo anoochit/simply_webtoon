@@ -11,7 +11,7 @@ class CategoryMenuView extends GetView<HomeController> {
     return Obx(
       () => CarouselSlider(
         carouselController: controller.menuCarouselController,
-        // TODO : use data from database
+        // use data from database
         items: List.generate(
           controller.listCategory.length,
           (index) => buildmenuItem(context, index),
@@ -38,7 +38,7 @@ class CategoryMenuView extends GetView<HomeController> {
       child: FilledButton.tonal(
         style: const ButtonStyle().copyWith(
           backgroundColor: (controller.menuIndex.value == index)
-              ? MaterialStatePropertyAll(
+              ? WidgetStatePropertyAll(
                   Theme.of(context).colorScheme.inversePrimary,
                 )
               : null,
