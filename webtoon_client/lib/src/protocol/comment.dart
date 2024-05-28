@@ -12,7 +12,7 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 
-abstract class Comment extends _i1.SerializableEntity {
+abstract class Comment implements _i1.SerializableModel {
   Comment._({
     this.id,
     required this.comment,
@@ -116,6 +116,11 @@ abstract class Comment extends _i1.SerializableEntity {
       'userInfoId': userInfoId,
       if (userInfo != null) 'userInfo': userInfo?.toJson(),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

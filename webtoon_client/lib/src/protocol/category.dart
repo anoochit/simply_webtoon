@@ -11,7 +11,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'protocol.dart' as _i2;
 
-abstract class Category extends _i1.SerializableEntity {
+abstract class Category implements _i1.SerializableModel {
   Category._({
     this.id,
     required this.title,
@@ -55,6 +55,11 @@ abstract class Category extends _i1.SerializableEntity {
       'title': title,
       if (books != null) 'books': books?.toJson(valueToJson: (v) => v.toJson()),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 

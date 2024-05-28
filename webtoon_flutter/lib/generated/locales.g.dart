@@ -33,7 +33,7 @@ class Locales {
     'thai': 'Thai',
     'english': 'English',
     'korea': 'Korea',
-    'dark': 'Dart',
+    'dark': 'Dark',
     'light': 'Light',
     'system': 'System',
   };
@@ -45,8 +45,8 @@ class Locales {
     'thai': '태국어',
     'english': '영어',
     'korea': '한국어',
-    'dark': '다크',
-    'light': '라이트',
+    'dark': '어두운',
+    'light': '밝은',
     'system': '시스템',
   };
   static const th_TH = {
@@ -57,8 +57,8 @@ class Locales {
     'thai': 'ภาษาไทย',
     'english': 'ภาษาอังกฤษ',
     'korea': 'ภาษาเกาหลี',
-    'dark': 'มืด',
-    'light': 'สว่าง',
+    'dark': 'โหมดมืด',
+    'light': 'โหมดสว่าง',
     'system': 'ระบบ',
   };
 }

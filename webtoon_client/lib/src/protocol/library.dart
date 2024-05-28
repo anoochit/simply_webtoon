@@ -12,7 +12,7 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
 import 'protocol.dart' as _i3;
 
-abstract class Library extends _i1.SerializableEntity {
+abstract class Library implements _i1.SerializableModel {
   Library._({
     this.id,
     required this.userInfoId,
@@ -91,6 +91,11 @@ abstract class Library extends _i1.SerializableEntity {
       'bookId': bookId,
       if (book != null) 'book': book?.toJson(),
     };
+  }
+
+  @override
+  String toString() {
+    return _i1.SerializationManager.encode(this);
   }
 }
 
