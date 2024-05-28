@@ -8,6 +8,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const BOOK_DETAIL = _Paths.BOOK_DETAIL;
   static const READ = _Paths.READ;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const HOME = '/home';
   static const BOOK_DETAIL = '/book-detail';
   static const READ = '/read';
+  static const PROFILE = '/profile';
 }

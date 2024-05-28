@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 import 'feed_view.dart';
 import 'giftbox_view.dart';
@@ -42,6 +43,21 @@ class HomeView extends GetView<HomeController> {
               centerTitle: true,
               toolbarHeight:
                   controller.appBarVisible.value ? statusBarHeight : 0.0,
+              leading: IconButton(
+                onPressed: () {
+                  // TODO : goto search page
+                },
+                icon: const Icon(Icons.search),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    // TODO : goto profile page
+                    Get.toNamed(Routes.PROFILE);
+                  },
+                  icon: const Icon(Icons.sort),
+                )
+              ],
             ),
           ),
         ),

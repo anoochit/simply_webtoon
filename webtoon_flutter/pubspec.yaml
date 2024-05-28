@@ -3,8 +3,8 @@ version: 1.0.0+1
 publish_to: none
 description: A new Flutter project with Serverpod.
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=3.10.0'
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
 
 dependencies:
   cached_network_image: ^3.3.1
@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   gap: ^3.0.1
   get: 4.6.6
+  get_storage: ^2.1.1
   minio:
     git:
       url: https://github.com/anoochit/minio-dart.git
