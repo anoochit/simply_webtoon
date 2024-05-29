@@ -16,7 +16,7 @@ class NavigationBarView extends GetView<HomeController> {
           controller.listMenuTile.length,
           (index) => BottomNavigationBarItem(
             icon: Icon(controller.listMenuIcon[index]),
-            label: controller.listMenuTile[index],
+            label: controller.listMenuTile[index].tr,
           ),
         ),
       ),

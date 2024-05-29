@@ -39,7 +39,8 @@ class HomeView extends GetView<HomeController> {
                 ? statusBarHeight
                 : onlyStatusBarHeight,
             child: AppBar(
-              title: Text(controller.listMenuTile[controller.navIndex.value]),
+              title:
+                  Text(controller.listMenuTile[controller.navIndex.value].tr),
               centerTitle: true,
               toolbarHeight:
                   controller.appBarVisible.value ? statusBarHeight : 0.0,

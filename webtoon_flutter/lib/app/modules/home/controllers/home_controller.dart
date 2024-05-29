@@ -16,10 +16,10 @@ class HomeController extends GetxController {
   final ScrollController scrollController = ScrollController();
 
   final listMenuTile = [
-    'Home',
-    'Schedule',
-    'GiftBox',
-    'Library',
+    'home',
+    'schedule',
+    'giftbox',
+    'library',
   ];
 
   final listMenuIcon = [
